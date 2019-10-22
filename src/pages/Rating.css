@@ -1,0 +1,81 @@
+body {
+    height: 200vh;
+    display: flex;
+    flex-direction: column;
+    background-color: #08082F;
+  } 
+   
+  h1 {
+    color: white;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 45px;
+    font-weight: bold;
+    text-align:  left;  
+    margin-left: 70px;
+  }
+  
+  h2 {
+    color: white;
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 30px;
+    font-weight: 300;
+  }
+  
+  .FormFieldA {
+    margin-bottom: 35px;
+  }
+
+  textarea {
+    margin-top:15px;
+    font-family: sans-serif;
+    font-size: 20px;
+    margin-left:  30px;
+    width: 500px;
+    height: 150px;
+  } 
+
+  .Form-Button {
+    background-color: white;
+    color: rgb(12, 11, 11);
+    border-radius: 25px;
+    padding: 15px 70px;
+    font-size: .8em;
+    font-weight: 500;
+    margin-left: 40px;
+  }
+
+  form {
+    width: 50%;
+  }
+  * {
+    box-sizing: border-box;
+  } 
+  
+  .Rater-icon {
+      margin-top: 15px;
+      float: right;
+      color: white;
+      font-size: 3em;
+  }
+  
+  .Rater-icon1 {
+    margin-top: 15px;
+    float: right;
+    color: white;
+    font-size: 3em;
+    margin-right: 720px; 
+  }
+  
+  .FormFieldHead {
+    float: left;
+    margin-left: 50px;
+  }
+  
+  .FormFieldQ {
+      margin-left: 40px;
+  }
+  
+  .FormTitle_Link {
+    margin-left: 100px;
+  }
+  
