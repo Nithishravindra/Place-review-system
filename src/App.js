@@ -18,12 +18,8 @@ class App extends Component {
             <Route  exact path="/welcomePage" component={WelcomePage}></Route>    
             <Route  path="/ratingPage/:placeName" component={RatingPage}></Route> 
             <Redirect to='/404'></Redirect>
-       
          </Switch>
     </Router>
-
-
-
   }
 }
 
