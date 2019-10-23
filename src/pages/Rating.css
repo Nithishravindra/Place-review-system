@@ -13,16 +13,24 @@ body {
     text-align:  left;  
     margin-left: 70px;
   }
-  
+
+  h3 {
+    color: white;
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 30px;
+   
+  }
+
   h2 {
     color: white;
     font-family: 'Times New Roman', Times, serif;
     font-size: 30px;
-    font-weight: 300;
+    
   }
   
   .FormFieldA {
     margin-bottom: 35px;
+    margin-left: 40px;
   }
 
   textarea {
@@ -78,4 +86,10 @@ body {
   .FormTitle_Link {
     margin-left: 100px;
   }
-  
+
+  .FormFieldTe{
+    margin-top: 10px;
+  }
+   .FormF {
+     margin-left: 30px;
+   }

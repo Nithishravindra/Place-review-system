@@ -6,95 +6,94 @@ import './Rating.css';
 class Rating extends Component {
         constructor() {
             super();
-            this.state = {
-                comment: '',
+            this.state = { 
                 rate1: '',
-                
+                comment: '',
+            
             };   
+
             this.handleChange = this.handleChange.bind(this);
             this.handleSubmit = this.handleSubmit.bind(this);
         }
 
         handleChange(e) {
-            let target = e.target;
-            let value = target.type === 'checkbox' ? target.checked : target.value;
-            let name = target.name;
-        
+          
             this.setState ({
-            [name]: value
+            [e.target.rate1]: e.target.value
             });
         }
 
+        // handle(e) {
+        //     console.log(e.rating);
+        //    this.setState(previousState => ({
+        //      rate1: [...previousState.rate1, { rate1: this.state.rate1 }]
+        //    }))
+        // }
+
         handleSubmit(e) {
-            console.log(e.Rating);
             e.preventDefault();
-            console.log('Rating completed ... ');
-            console.log(this.state);
+            // console.log(e.Rating);
+           
+            // this.setState(previousState => ({
+            //     comment: [...previousState.comment, { comment: this.state.comment }]
+            // }))
         }
    
-        handle(e) {
-            console.log(e.rating);
+       
+        componentDidMount () {
+            // const { hand } = this.props.match.params;
+            // const { state } = this.props.state
+
         }
 
-        render(){
-            var a = window.location.href;
-            let b = a.split;
-            console.log('b', b);
-            // no need to do it like this, there's a simpler way - if you remember in App.js you've created dynamic variable in url for placename - you can use it
-            console.log(this.props.match.params.placeName)
-        return (  
-            <div className="Appp">
-                {/* PARSE URL AND APPEND IN H1 TAG  */}
 
+        render(){
+            const { comment } = this.state;
+            const { description  } = this.props.location.state;
+            console.log(comment);
+       return (  
+            <div className="Appp">
+                
                 <div className="FormFieldA">
-                        <h1>{this.props.match.params.placeName}</h1>
+                    <h1>{this.props.match.params.placeName}</h1> 
                 </div>
                 
                 {/* description to be retrived from db */}
-                <div className="FormFieldText">
-                    <textarea type="text" placeholder=" Description(Optional)" />
+
+                <div className="FormFieldTe">
+                    <p>{description}</p>
                 </div>    
                 
+
                 {/* avg from db */}
                 <div className="FormFieldQ">
                     <div className="FormFieldHead">
-                        <h2> <li> Average Rating by others  </li> </h2>
+                        <h3>Average Rating </h3>
                     </div>
                     <div className="Rater-icon1">    
                         <Rater onRate={this.handle} />
                     </div>
-                    {/* <textarea type="text" placeholder="earlier comments to be displayed" /> */}
                 </div>
                         
+                
                 <div className="FormCenter">
                     <form onSubmit={this.handleSubmit} className="FormFields">
                         
-                        
-                        <div className="FormFieldA">
+                        <div className="FormF">
                             <div className="FormFieldHead">
-                                <h2> <li>Overall rating of the Place </li> </h2>
+                                <h2>Your rating</h2>
                             </div>
                             <div className="Rater-icon">    
-                                    <Rater onRate={this.handle} />
+                                 <Rater onRate={this.handleChange} name="rate1" />
                             </div>
                         </div>
                         
                         <div className="FormFieldA">
-                            <div className="FormFieldHead">
-                            <h2> <li> Recommend others on scale of 5 </li> </h2>
-                            </div>
-                            <div className="Rater-icon">    
-                                    <Rater onRate={this.handle} />
-                            </div>
-                        </div>
+                            <textarea type="text" placeholder = "Enter your comment" defaultValue = { comment } name= "comment" onChange={this.handleChange}/>
+                       </div>
                         
                         <div className="FormFieldA">
-                            <textarea className="comment" placeholder="Enter your comment " name="message" rows="5"></textarea>
-                            <br />
-                        </div>
-                        
-                        <div className="FormFieldA">
-                            <button onClick={()=>{alert('Thank you for feedback')}}className="Form-Button">SUBMIT</button> 
+                            <button onClick={this.handleSubmit} className="Form-Button">SUBMIT</button> 
                         </div>
                         
                     </form>

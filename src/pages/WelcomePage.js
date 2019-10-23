@@ -18,6 +18,14 @@ class App extends Component {
 				{
 					title: 'Jayanagar',
 					description: 'As a newbie in React world, I came across a similar issues where I could not edit the textarea and struggled'
+				},
+				{
+					title: 'Kolar',
+					description: 'My native',
+				},
+				{
+					title: 'Taj_mahal',
+					description: 'The Taj Mahal is located on the right bank of the Yamuna River in a vast Mughal garden that encompasses nearly 17 hectares, in the Agra District in Uttar Pradesh. It was built by Mughal Emperor Shah Jahan in memory of his wife Mumtaz Mahal with construction starting in 1632 AD and completed in 1648 AD, with the mosque, the guest house and the main gateway on the south, the outer courtyard and its cloisters were added subsequently and completed in 1653 AD. The existence of several historical and Quaranic inscriptions in Arabic script have facilitated setting the chronology of Taj Mahal. For its construction, masons, stone-cutters, inlayers, carvers, painters, calligraphers, dome builders and other artisans were requisitioned from the whole of the empire and also from the Central Asia and Iran. Ustad-Ahmad Lahori was the main architect of the Taj Mahal.'
 				}
 			]
 		};
@@ -32,18 +40,18 @@ class App extends Component {
 		});
 	  }
 	
-	  handleSubmit(e) {
+	handleSubmit(e) {
 		e.preventDefault();
 		console.log('The form was submitted with the following data:');
 		console.log(this.state);
+
 		// I'm appending an object and pushing it to list
 		this.setState(previousState => ({
 			listOfPlaces: [...previousState.listOfPlaces, { title: this.state.placeTitle, description: this.state.description  }]
 		}));
-	  }
+	}
 
 	componentDidMount() {
-		// this does not make sense. what are you trying to achieve ? If you want to change some value save it in state
 		document.title = 'Welcome to PRS';
 	}
 
@@ -55,37 +63,52 @@ class App extends Component {
 			<div className="Ap">
 				<div className="FormFieldB">
 					<h4>Welcome to Place Review System</h4>
-					{/* Removed li under p nesting - did not make sense */}
-					<p>Places listed below can be reviewed.</p>
+					<h5>Places listed below can be reviewed.</h5>
 				</div>
 
-				{/* URL Sector for navgiation to page3 */}
+				{/* URL ->  navgiation to page3 */}
 				<div className="FormFieldB">
-					<div className="FormTitle">
+				   
+				   {/* earlier  */}
+					{/* <div className="FormTitle">
 						{
 							listOfPlaces.map((item, index) => (
-								<Link to={`/ratingPage/${item.title}`} key={index} className="FormTitle__Link">{item.title}</Link>
-							))
+								<Link to={`/ratingPage/${item.title}`} key={index} className="FormTitle_Ln">{item.title}</Link>	
+								))
 						}
-					</div>
+					</div> */}
 
-					<div className="FormFieldB">
+					
+						<div className="FormTitle">
+							{
+								listOfPlaces.map((item, index) => (
+									<Link to={{
+										pathname: `/ratingPage/${item.title}`,
+										state: {
+											description : item.description,
+										}
+									}} 	
+									key={index} className="FormTitle_Ln">{item.title} 
+									</Link>	
+								))
+							}
+						</div>
+
+					
 						<form onSubmit={this.handleSubmit}>
-							{/* Removed li under p nesting - did not make sense */}
-							<p>To add a new place in the list add title and description in below textbox and click on 'SUBMIT'</p> 
-								
+							<h5>To add a new place in the list add title and description in below textbox and click on 'SUBMIT'</h5>
+							
 							<div className="FormFieldT">
 								<input type="text" placeholder="Place Title" value={placeTitle} name="placeTitle" onChange={this.handleChange} />
 							</div>
 						 
-							{/* changed value to default value - https://stackoverflow.com/questions/33245017/react-modifying-textarea-values */}
-							<div className="FormFieldText">
+							<div className="FormFText">
                     			<textarea type="text" placeholder="Description" defaultValue={description} name="description" onChange={this.handleChange}/>
                 			</div>    
 
 							<button className="FormT_button" onClick={this.handleSubmit}>SUBMIT</button> 
 						 </form>
-					</div>
+					
 				</div>
 			 </div>
 		)
