@@ -40,14 +40,15 @@ class Rating extends Component {
             var a = window.location.href;
             let b = a.split;
             console.log('b', b);
-        
+            // no need to do it like this, there's a simpler way - if you remember in App.js you've created dynamic variable in url for placename - you can use it
+            console.log(this.props.match.params.placeName)
         return (  
             <div className="Appp">
                 {/* PARSE URL AND APPEND IN H1 TAG  */}
 
                 <div className="FormFieldA">
-                        <h1>(Place Title)</h1>
-                </div>`
+                        <h1>{this.props.match.params.placeName}</h1>
+                </div>
                 
                 {/* description to be retrived from db */}
                 <div className="FormFieldText">
