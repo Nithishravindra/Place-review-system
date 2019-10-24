@@ -11,7 +11,6 @@ class App extends Component {
   render(){
   return  <Router >
         <Switch>
-            {/* <Redirect exact from='/404' to="/sign-in"></Redirect> */}
             <Route path='/' exact={true} component={SignInForm} />
             <Route  exact path="/sign-in" component={SignInForm}></Route>     
             <Route  exact path="/sign-up" component={SignUpForm}></Route> 

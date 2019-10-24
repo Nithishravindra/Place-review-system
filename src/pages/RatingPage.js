@@ -10,6 +10,15 @@ class Rating extends Component {
                 rate1: '',
                 comment: '',
             
+                listOfComments: [
+                    {
+                        newComment: 'woowwww'
+                    },
+                    {
+                        newComment: 'abcdef'
+                    },
+                    
+                ]
             };   
 
             this.handleChange = this.handleChange.bind(this);
@@ -17,34 +26,26 @@ class Rating extends Component {
         }
 
         handleChange(e) {
-          
+            
             this.setState ({
             [e.target.rate1]: e.target.value
             });
         }
 
-        // handle(e) {
-        //     console.log(e.rating);
-        //    this.setState(previousState => ({
-        //      rate1: [...previousState.rate1, { rate1: this.state.rate1 }]
-        //    }))
-        // }
+        handle(e) {
+            // to get count of stars clicked
+            console.log(e.rating);
+
+        }
 
         handleSubmit(e) {
             e.preventDefault();
-            // console.log(e.Rating);
            
             // this.setState(previousState => ({
-            //     comment: [...previousState.comment, { comment: this.state.comment }]
+            //     newComment: [...previousState.comment, { comment: this.state.comment }]
             // }))
         }
    
-       
-        componentDidMount () {
-            // const { hand } = this.props.match.params;
-            // const { state } = this.props.state
-
-        }
 
 
         render(){
@@ -52,14 +53,11 @@ class Rating extends Component {
             const { description  } = this.props.location.state;
             console.log(comment);
        return (  
-            <div className="Appp">
-                
+            <div className="Appp"> 
                 <div className="FormFieldA">
                     <h1>{this.props.match.params.placeName}</h1> 
                 </div>
-                
-                {/* description to be retrived from db */}
-
+            
                 <div className="FormFieldTe">
                     <p>{description}</p>
                 </div>    
@@ -75,21 +73,25 @@ class Rating extends Component {
                     </div>
                 </div>
                         
+
                 
                 <div className="FormCenter">
                     <form onSubmit={this.handleSubmit} className="FormFields">
                         
                         <div className="FormF">
                             <div className="FormFieldHead">
-                                <h2>Your rating</h2>
+                                <h2>Your rating </h2>
                             </div>
+
+                            {/* https://www.npmjs.com/package/react-rater */}
+
                             <div className="Rater-icon">    
-                                 <Rater onRate={this.handleChange} name="rate1" />
+                                 <Rater onRate={this.handle} name="rate1" />
                             </div>
                         </div>
                         
                         <div className="FormFieldA">
-                            <textarea type="text" placeholder = "Enter your comment" defaultValue = { comment } name= "comment" onChange={this.handleChange}/>
+                            <textarea type="text" placeholder = "Enter your comment" defaultValue = { Comment } name= "comment" onChange={this.handleChange}/>
                        </div>
                         
                         <div className="FormFieldA">
