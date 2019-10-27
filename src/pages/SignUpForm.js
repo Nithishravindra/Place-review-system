@@ -33,9 +33,19 @@ class SignUpForm extends Component {
 		console.log('The form was submitted with the following data:');
 		console.log(this.state);
 	}
-	componentDidMount() {
-		document.title = 'PRS log in or sign up';
-	}
+
+	// getUsers = _ => {
+	// 	fetch('http://localhost:4000/users')
+	// 		.then(res => res.json())
+	// 		.then(({ data }) => {
+	// 			console.log(data)
+	// 		})
+	// 		.catch(err => console.error());
+	// }
+	// componentDidMount() {
+	// 	document.title = 'PRS log in or sign up';
+	// 	this.getUsers();
+	// }
 
 	render() {
 		return (
