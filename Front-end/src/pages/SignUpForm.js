@@ -34,18 +34,12 @@ class SignUpForm extends Component {
 		console.log(this.state);
 	}
 
-	// getUsers = _ => {
-	// 	fetch('http://localhost:4000/users')
-	// 		.then(res => res.json())
-	// 		.then(({ data }) => {
-	// 			console.log(data)
-	// 		})
-	// 		.catch(err => console.error());
-	// }
-	// componentDidMount() {
-	// 	document.title = 'PRS log in or sign up';
-	// 	this.getUsers();
-	// }
+	componentDidMount() {
+		document.title = 'PRS log in or sign up';
+		fetch('/users')
+			.then(res => res.json())
+			.then(users => this.setState({ users }))
+	}
 
 	render() {
 		return (
