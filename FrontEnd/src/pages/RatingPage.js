@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import Rater from 'react-rater';
+import { Route, NavLink } from 'react-router-dom';
 import 'react-rater/lib/react-rater.css';
 import './Rating.css';
+import feedBackPage from './feedBackPage';
 
 class Rating extends Component {
         constructor() {
@@ -26,10 +28,9 @@ class Rating extends Component {
         }
 
         handleChange(e) {
-            
-            this.setState ({
-            [e.target.rate1]: e.target.value
-            });
+            this.setState({
+                [e.target.name]: e.target.value
+              });
         }
 
         handle(e) {
@@ -40,67 +41,85 @@ class Rating extends Component {
 
         handleSubmit(e) {
             e.preventDefault();
-           
-            // this.setState(previousState => ({
-            //     newComment: [...previousState.comment, { comment: this.state.comment }]
-            // }))
+    
+            this.setState(previousState => ({
+                listOfComments: [...previousState.listOfComments, { title: this.state.newComment  } ]
+            }));
         }
    
-
-
         render(){
             const { comment } = this.state;
             const { description  } = this.props.location.state;
             console.log(comment);
-       return (  
+       
+         return (  
+        
             <div className="Appp"> 
-                <div className="FormFieldA">
-                    <h1>{this.props.match.params.placeName}</h1> 
-                </div>
+                <div className="login-left">
+                    <div className="FormFieldA">
+                        <h1>{this.props.match.params.placeName}</h1> 
+                    </div>
             
-                <div className="FormFieldTe">
-                    <p>{description}</p>
-                </div>    
-                
-
+                    <div className="holder"> 
+                        <p>{description}</p>
+                    </div>    
+             
                 {/* avg from db */}
                 <div className="FormFieldQ">
-                    <div className="FormFieldHead">
+                  <div className="FormFieldHead">
                         <h3>Average Rating </h3>
                     </div>
                     <div className="Rater-icon1">    
                         <Rater onRate={this.handle} />
                     </div>
-                </div>
-                        
-
                 
+
                 <div className="FormCenter">
                     <form onSubmit={this.handleSubmit} className="FormFields">
                         
-                        <div className="FormF">
-                            <div className="FormFieldHead">
+                         <div className="FormFieldQ">  
+                            
                                 <h2>Your rating </h2>
-                            </div>
+                              </div> 
 
                             {/* https://www.npmjs.com/package/react-rater */}
-
+                    
                             <div className="Rater-icon">    
                                  <Rater onRate={this.handle} name="rate1" />
                             </div>
-                        </div>
+                        
                         
                         <div className="FormFieldA">
                             <textarea type="text" placeholder = "Enter your comment" defaultValue = { Comment } name= "comment" onChange={this.handleChange}/>
                        </div>
-                        
+                       
                         <div className="FormFieldA">
                             <button onClick={this.handleSubmit} className="Form-Button">SUBMIT</button> 
                         </div>
-                        
+
+
+
                     </form>
-                 </div>
+                    </div>
             </div>
+            <div className="login-right">
+                {/* should add comment textboxes with respective name */}
+                <h3>Comments</h3>
+            </div>
+
+           
+          <NavLink to="/feedBackPage" activeClassName="feedback" >Give us FeedBack here </NavLink>
+          
+       
+            <Route excat path="/feedBackPage" component={feedBackPage} />
+        </div>  
+    </div>
+           
+
+
+
+
+
      )}
   }
   

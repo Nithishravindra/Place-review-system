@@ -18,12 +18,12 @@ class SignUpForm extends Component {
 	}
 
 	handleChange(e) {
-		let target = e.target;
-		let value = target.type ===  target.value;
-		let name = target.name;
-
+		// let target = e.target;
+		// let value = e.target.value;
+		// let name = target.name;
+		
 		this.setState({
-			[name]: value
+			[e.target.name]: e.target.value
 		});
 	}
 
@@ -32,13 +32,30 @@ class SignUpForm extends Component {
 
 		console.log('The form was submitted with the following data:');
 		console.log(this.state);
-	}
 
+		const data = { name: this.state.name, email:this.state.email, phone: this.state.phno, password:this.state.password}
+		fetch('http://localhost/3005/users/add', { 
+			method: 'POST', 
+			body: JSON.stringify(data),
+			headers:{ 'Content-Type': 'application/json' } })
+			.then( res => res.json())
+			.catch(err => console.log('error == ' , err))  
+			.then(response => console.log('inserted ', response));
+		}
+	
 	componentDidMount() {
 		document.title = 'PRS log in or sign up';
-		fetch('/users')
-			.then(res => res.json())
-			.then(users => this.setState({ users }))
+		// const url = 'http://localhost/:3005/users';
+    	// fetch(url)
+      	// 	.then(results =>{
+		// 		  return results.json();
+		// 	  })
+	
+		// const options = {
+		// 	method: 'POST',
+
+		// }
+		// const request = new Request('http://localhost/:3005/user', options)
 	}
 
 	render() {
@@ -52,7 +69,7 @@ class SignUpForm extends Component {
                     <Link to="/sign-up"  className="FormTitle__Link"> Sign Up</Link>
 				</div>
 				<div className="PageSwitcher">
-					<NavLink to="/sign-" activeClassName="PageSwitcher__Item--Active" className="PageSwitcher__Item">Sign In</NavLink>
+					<NavLink to="/sign-in" activeClassName="PageSwitcher__Item--Active" className="PageSwitcher__Item">Sign In</NavLink>
 					<NavLink to="/sign-up" activeClassName="PageSwitcher__Item--Active" className="PageSwitcher__Item">Sign Up</NavLink>
 				</div>
 
@@ -66,12 +83,7 @@ class SignUpForm extends Component {
 					<div className="FormField">
 						<label className="FormField__Label" htmlFor="email">Email Address</label>
 						<input type="email" id="email" className="FormField__Input" placeholder="Enter your Email" name="email" value={this.state.email} onChange={this.handleChange} />
-					</div>
-
-					<div className="FormField">
-						<label className="FormField__Label" htmlFor="phno">Phone no</label>
-						<input type="text" id="phoneno" className="FormField__Input" placeholder="Enter your phone no" name="phone" value={this.state.phone} onChange={this.handleChange} />
-					</div>
+					</div>					
 
 					<div className="FormField">
 						<label className="FormField__Label" htmlFor="password">Password</label>
@@ -84,9 +96,15 @@ class SignUpForm extends Component {
 					</div>
 
 					<div className="FormField">
-						<Link to="/sign-in"><button onClick={() => { alert('Registered successful')}} className="FormField__Button mr-20">Sign Up</button> </Link>
-						<Link to="/sign-in" className="FormField__Link">I'm already member</Link>
+						<label className="FormField__Label" htmlFor="phno">Phone no</label>
+						<input type="text" id="phoneno" className="FormField__Input" placeholder="Enter your phone no" name="phone" value={this.state.phone} onChange={this.handleChange} />
 					</div>
+
+					<div className="FormField">
+						<Link to="/welcomePage"><button onClick={() => { alert('Registered successful')}} className="FormField__Button mr-20">Sign Up</button> </Link>
+						<Link to="/sign-up" className="FormField__Link">I'm already member</Link>
+					</div>
+
 					<Route excat path="/welcomePage" component={WelcomePage} />
 				</form>
 			</div>

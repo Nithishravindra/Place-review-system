@@ -18,19 +18,13 @@ body {
     color: white;
     font-family: 'Times New Roman', Times, serif;
     font-size: 30px;
-   
-  }
-
-  h2 {
-    color: white;
-    font-family: 'Times New Roman', Times, serif;
-    font-size: 30px;
-    
+    margin-left: 30px;
   }
   
   .FormFieldA {
-    margin-bottom: 35px;
-    margin-left: 40px;
+    margin-bottom: 34px;
+    margin-left: 5px;
+
   }
 
   textarea {
@@ -64,6 +58,7 @@ body {
       float: right;
       color: white;
       font-size: 3em;
+      margin-right: 60px;
   }
   
   .Rater-icon1 {
@@ -77,10 +72,12 @@ body {
   .FormFieldHead {
     float: left;
     margin-left: 50px;
+    margin-top: auto;
   }
   
   .FormFieldQ {
-      margin-left: 40px;
+      margin-left: 5px;
+
   }
   
   .FormTitle_Link {
@@ -88,8 +85,9 @@ body {
   }
 
   .FormFieldTe{
-    margin-top: 10px;
+    padding:  30px;
   }
+
    .FormF {
      margin-left: 30px;
    }
@@ -100,4 +98,37 @@ body {
     border-bottom-style: solid;
     border-left-style: solid;
     margin-left: 80px;
+    /* border-right-width: 200px; */
   }
+  h2 {
+    color: white;
+    float: left;
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 30px;
+    margin-left: -195px;
+    margin-top: 100px;
+    font-weight: bold;
+  }
+
+.holder {
+    /* border: 1px solid #000; */
+    height: 200px;
+    width: 700px;
+    position:relative;
+    margin:10px;
+} 
+
+.login-right{
+  padding: 30px;
+  float: right;
+  margin-top: -720px;
+  margin-right: 350px;
+}
+
+.login-left{
+  padding: 30px;
+}
+
+.feedback {
+  color: aliceblue;
+}

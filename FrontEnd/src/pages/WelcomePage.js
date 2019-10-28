@@ -25,7 +25,7 @@ class App extends Component {
 				},
 				{
 					title: 'Taj_mahal',
-					description: 'The Taj Mahal is located on the right bank of the Yamuna River in a vast Mughal garden that encompasses nearly 17 hectares, in the Agra District in Uttar Pradesh. It was built by Mughal Emperor Shah Jahan in memory of his wife Mumtaz Mahal with construction starting in 1632 AD and completed in 1648 AD, with the mosque, the guest house and the main gateway on the south, the outer courtyard and its cloisters were added subsequently and completed in 1653 AD. The existence of several historical and Quaranic inscriptions in Arabic script have facilitated setting the chronology of Taj Mahal. For its construction, masons, stone-cutters, inlayers, carvers, painters, calligraphers, dome builders and other artisans were requisitioned from the whole of the empire and also from the Central Asia and Iran. Ustad-Ahmad Lahori was the main architect of the Taj Mahal.'
+					description: 'The Taj Mahal is located on the right bank of the Yamuna River in a vast Mughal garden that encompasses nearly 17 hectares, in the Agra District in Uttar Pradesh. It was built by Mughal Emperor Shah Jahan in memory of his wife Mumtaz Mahal with construction starting in 1632 AD and completed in 1648 AD, with the mosque, the guest house and the main gateway on the south, the outer courtyard and its cloisters were added subsequently and completed in 1653 AD. The existence of several historical and Quaranic inscriptions in Arabic script have facilitated setting the chronology of Taj Mahal.'
 				}
 			]
 		};
@@ -69,32 +69,19 @@ class App extends Component {
 				{/* URL ->  navgiation to page3 */}
 				<div className="FormFieldB">
 				   
-				   {/* earlier  */}
-					{/* <div className="FormTitle">
+					<div className="FormTitle">
+						
 						{
 							listOfPlaces.map((item, index) => (
-								<Link to={`/ratingPage/${item.title}`} key={index} className="FormTitle_Ln">{item.title}</Link>	
-								))
+							<Link to={{
+								pathname: `/ratingPage/${item.title}`,
+								state: {
+									description : item.description,
+								}}} 	
+								key={index} className="FormTitle_Ln">{item.title} 
+								</Link>))
 						}
-					</div> */}
-
-					
-						<div className="FormTitle">
-							{
-								listOfPlaces.map((item, index) => (
-									<Link to={{
-										pathname: `/ratingPage/${item.title}`,
-										state: {
-											description : item.description,
-										}
-									}} 	
-									key={index} className="FormTitle_Ln">{item.title} 
-									</Link>	
-								))
-							}
-						</div>
-
-					
+					</div>
 						<form onSubmit={this.handleSubmit}>
 							<h5>To add a new place in the list add title and description in below textbox and click on 'SUBMIT'</h5>
 							

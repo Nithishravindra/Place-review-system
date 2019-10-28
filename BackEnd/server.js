@@ -11,4 +11,4 @@ app.use("/users", userRoutes);
 app.use("/places",placeRoutes);
 app.use("/rating",ratingRoutes)
 
-app.listen(3001);
+app.listen(3005);

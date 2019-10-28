@@ -26,7 +26,7 @@ Router.get("/:id", (req, res) => {
 })
 
 // to DELETE an USER 
-Router.delete("/:id", (req, res) => {
+Router.delete("/delete/:id", (req, res) => {
     mysqlConnection.query('DELETE FROM users WHERE user_id = ? ',[req.params.id] ,(error, rows, fields) => {
         if(!error){
             res.send('Deleted successfully');
@@ -37,7 +37,7 @@ Router.delete("/:id", (req, res) => {
 })
 
 // to INSERT an user 
-Router.post("/", (req, res) => {
+Router.post("/add", (req, res) => {
     let usr  = req.body;
     var sqll = ' SET @USER_ID = ?; SET @NAME = ?; SET @EMAIL = ?; SET @PASSWORD = ?; SET @PHNO = ? ;\
     CALL UserAddOrEdit(@USER_ID, @NAME, @EMAIL, @PASSWORD, @PHNO);';
@@ -54,15 +54,13 @@ Router.post("/", (req, res) => {
 })
 
 // to UPDATE an existing user 
-Router.put("/", (req, res) => {
+Router.put("/update", (req, res) => {
     let usr  = req.body;
     var sqll = ' SET @USER_ID = ?; SET @NAME = ?; SET @EMAIL = ?; SET @PASSWORD = ?; SET @PHNO = ? ;\
     CALL UserAddOrEdit(@USER_ID, @NAME, @EMAIL, @PASSWORD, @PHNO);';
     console.log(usr, sqll);
     mysqlConnection.query(sqll, [usr.USER_ID, usr.NAME, usr.EMAIL, usr.PASSWORD, usr.PHNO],(error, rows, fields) => {
         if(!error){
-            console.log(usr.USER_ID, usr.EMAIL);
-            console.log('Stored procedure invoked');
             res.send('updated successfully');
         } else {
             console.log(error);

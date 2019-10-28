@@ -26,7 +26,7 @@ Router.get("/:id", (req, res) => {
 })
 
 // to DELETE an PLACE 
-Router.delete("/:id", (req, res) => {
+Router.delete("/delete/:id", (req, res) => {
     mysqlConnection.query('DELETE FROM places WHERE PLACE_ID = ? ',[req.params.id] ,(error, rows, fields) => {
         if(!error){
             res.send('Deleted successfully');
@@ -37,13 +37,12 @@ Router.delete("/:id", (req, res) => {
 })
 
 // to INSERT an PLACE
-Router.post("/", (req, res) => {
+Router.post("/add", (req, res) => {
     let usr  = req.body;
     var sqll = ' SET @PLACE_ID = ?; SET @PLACE_TITLE = ?; SET @PLACE_DESCRIPTION = ?; SET @USERS_USER_ID = ? ;\
     CALL AddPlace(@PLACE_ID, @PLACE_TITLE, @PLACE_DESCRIPTION, @USERS_USER_ID);';
     mysqlConnection.query(sqll, [usr.PLACE_ID, usr.PLACE_TITLE, usr.PLACE_DESCRIPTION, usr.USERS_USER_ID],(error, rows, fields) => {
         if(!error){
-            console.log("innnn");
              rows.forEach(element => {
              if(element.constructor == Array)
                     res.send('INSERTED  PLACE_ID = ' + element[0].PLACE_ID);
@@ -55,11 +54,10 @@ Router.post("/", (req, res) => {
 })
 
 // to UPDATE an existing PLACE  
-Router.put("/", (req, res) => {
+Router.put("/update", (req, res) => {
     let usr  = req.body;
     var sqll = ' SET @PLACE_ID = ?; SET @PLACE_TITLE = ?; SET @PLACE_DESCRIPTION = ?; SET @USERS_USER_ID = ?;\
     CALL AddPlace(@PLACE_ID, @PLACE_TITLE, @PLACE_DESCRIPTION, @USERS_USER_ID);';
-    console.log(usr, sqll);
     mysqlConnection.query(sqll, [usr.PLACE_ID, usr.PLACE_TITLE, usr.PLACE_DESCRIPTION, usr.USERS_USER_ID],(error, rows, fields) => {
         if(!error){
             res.send('updated successfully');

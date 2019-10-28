@@ -17,6 +17,7 @@ class SignInForm extends Component {
     let target = e.target;
     let value = target.type === 'checkbox' ? target.checked : target.value;
     let name = target.name;
+    
     this.setState({
       [name]: value
     });
@@ -26,6 +27,9 @@ class SignInForm extends Component {
     e.preventDefault();
     console.log('The form was submitted with the following data:');
     console.log(this.state);
+
+
+
   }
 
   componentDidMount() {
