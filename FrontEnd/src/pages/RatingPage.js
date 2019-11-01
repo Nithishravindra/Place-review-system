@@ -4,6 +4,7 @@ import { Route, NavLink } from 'react-router-dom';
 import 'react-rater/lib/react-rater.css';
 import './Rating.css';
 import feedBackPage from './feedBackPage';
+import Popup from "reactjs-popup";
 
 class Rating extends Component {
         constructor() {
@@ -50,18 +51,27 @@ class Rating extends Component {
         render(){
             const { comment } = this.state;
             const { description  } = this.props.location.state;
-            console.log(comment);
+            const { dataPassed } = this.props.location || [];
+            console.log(dataPassed);
+                const clickedPlace = dataPassed !== undefined  ? dataPassed.listOfPlaces.find(
+                            item => item.placeId === dataPassed.placeId
+                      ) : [];
+            
+                  console.log(clickedPlace, "clickedPlace");
+            if (dataPassed === undefined) {
+                return <p>No Data!</p>;
+            }
        
          return (  
         
             <div className="Appp"> 
-                <div className="login-left">
+                <div className="page-left">
                     <div className="FormFieldA">
-                        <h1>{this.props.match.params.placeName}</h1> 
+                        <h1>{clickedPlace.title}</h1> 
                     </div>
             
                     <div className="holder"> 
-                        <p>{description}</p>
+                        <p>{clickedPlace.description}</p>
                     </div>    
              
                 {/* avg from db */}
@@ -76,42 +86,43 @@ class Rating extends Component {
 
                 <div className="FormCenter">
                     <form onSubmit={this.handleSubmit} className="FormFields">
-                        
-                         <div className="FormFieldQ">  
-                            
-                                <h2>Your rating </h2>
-                              </div> 
-
+                        <div className="FormFieldQ">  
+                            <h2>Your rating </h2> 
+                        </div> 
                             {/* https://www.npmjs.com/package/react-rater */}
-                    
-                            <div className="Rater-icon">    
-                                 <Rater onRate={this.handle} name="rate1" />
-                            </div>
-                        
+                        <div className="Rater-icon">    
+                            <Rater onRate={this.handle} name="rate1" />
+                        </div>
                         
                         <div className="FormFieldA">
-                            <textarea type="text" placeholder = "Enter your comment" defaultValue = { Comment } name= "comment" onChange={this.handleChange}/>
+                            <textarea type="text" placeholder="Enter your comment" defaultValue = { Comment } name= "comment" onChange={this.handleChange}/>
                        </div>
                        
                         <div className="FormFieldA">
                             <button onClick={this.handleSubmit} className="Form-Button">SUBMIT</button> 
                         </div>
-
-
-
                     </form>
                     </div>
             </div>
-            <div className="login-right">
-                {/* should add comment textboxes with respective name */}
-                <h3>Comments</h3>
+            <div className="comment_right">
+            <h3>Comments</h3>
+                {clickedPlace.comments.map(item => (
+                      <div key={item.id}>
+                        <ul>
+                            <li> Name: {item.userName}</li> </ul>
+                            <p>Comment: {item.commentText}</p>
+                   
+                        </div>
+                    ))} 
             </div>
 
-           
-          <NavLink to="/feedBackPage" activeClassName="feedback" >Give us FeedBack here </NavLink>
-          
-       
+            {/* <Popup trigger={<button> Give us FeedBack here </button>} position="right center">
+                     <div> was this site helpful </div>
+            </Popup> */}
+
+            <NavLink to="/feedBackPage" ClassName="feedback" >Give us FeedBack here </NavLink>
             <Route excat path="/feedBackPage" component={feedBackPage} />
+
         </div>  
     </div>
            

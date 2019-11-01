@@ -1,10 +1,7 @@
-.ov {
+.radio_button {
      margin-left: 50px ;
 }
-.check {
-    margin-top: -55px; 
-     float: left ;
-     margin-left: -10px;
-   
-}
- 
+input {
+     border: 1px solid white;
+    
+ }

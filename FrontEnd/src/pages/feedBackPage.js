@@ -7,16 +7,17 @@ import { Component } from 'react';
 	constructor() {
 		super();
 		this.state = {
+			radio: '',
             feedback: " ",	
             
             previousFeedback: [
 				{
 					
-					feedback: 'Kadle KAi Pareshe'
+					feedback: 'neeed to work more '
 				},
 				{
 					
-					feedback: 'As a newbie in React world, I came across a similar issues where I could not edit the textarea and struggled'
+					feedback: 'amazing...'
 				},
 				
 			]
@@ -40,35 +41,25 @@ import { Component } from 'react';
 	}
     
 	render() {
-        const { feedback, previousFeedback } = this.state;
+        const { feedback } = this.state;
 		return (
 			<div className="Ap">
-				
 				<div className="FormFieldB">
 				   <form onSubmit={this.handleSubmit}>
-					    <h3> was this website helpful?</h3>	
+					    <h3> was this site helpful?</h3>	
                         
-                            <div className="ov">
-                                <h3> yes </h3>
-                                <div className="check">
-                                    <input type="checkbox" />
-                                </div>
+                            <div className="radio_button">
+								
+                                    <input type="radio" name = "radio1" onChange={this.handleChange} /> YES	<br />								
+									<input type="radio" name = "radio1" onChange={this.handleChange}/> NO 
                             </div>
-                            
-                            <div className="ov">
-                                <h3> no </h3>
-                                <div className="check">
-                                    <input type="checkbox" />
-                                </div>
-                            </div>
-
+                        
                             <div className="FormFText">
-                    			<textarea type="text" placeholder="provide your feedback here"  defaultvalue={feedback} name="description" onChange={this.handleChange}/>
+                    			<textarea type="text" placeholder="provide your feedback here"  onChange={this.handleChange}/>
                 			</div>  
-
+																{/* handlesubmit ->  beg/end*/}
                             <button className="FormT_button" onClick={this.handleSubmit}>SUBMIT</button> 
 					</form>
-					
 				</div>
 			 </div>
 		)

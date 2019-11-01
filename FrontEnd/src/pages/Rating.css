@@ -77,7 +77,6 @@ body {
   
   .FormFieldQ {
       margin-left: 5px;
-
   }
   
   .FormTitle_Link {
@@ -111,24 +110,33 @@ body {
   }
 
 .holder {
-    /* border: 1px solid #000; */
-    height: 200px;
+    height: auto;
     width: 700px;
     position:relative;
     margin:10px;
 } 
 
-.login-right{
-  padding: 30px;
+.comment_right{
+  /* padding: 30px; */
   float: right;
-  margin-top: -720px;
-  margin-right: 350px;
+  height: 200px;
+  margin-right: 50px;
 }
 
-.login-left{
+.page-left{
   padding: 30px;
 }
 
-.feedback {
-  color: aliceblue;
+
+
+.react-rater-star.is-active {
+  color: greenyellow;
+}
+
+li {
+  font-family: 'Times New Roman', Times, serif;
+    color: white;
+    font-size: 30px;
+    text-align: left;
+    
 }
