@@ -8,102 +8,162 @@ class SignUpForm extends Component {
 		this.state = {
 			name: '',
 			email: '',
-			phone: '',
 			password: '',
 			conpassword: '',
+			phno:'',
+			errorMessage: ''
 
 		};
 		this.handleChange = this.handleChange.bind(this);
-		this.handleSubmit = this.handleSubmit.bind(this);
+		//this.handleSubmit = this.handleSubmit.bind(this);
 	}
 
 	handleChange(e) {
-		// let target = e.target;
-		// let value = e.target.value;
-		// let name = target.name;
+		let target = e.target;
+		let value = target.type === 'checkbox' ? target.checked : target.value;
+		let name = target.name;
 		
 		this.setState({
-			[e.target.name]: e.target.value
+		  [name]: value
 		});
 	}
 
-	handleSubmit(e) {
-		e.preventDefault();
-
-		console.log('The form was submitted with the following data:');
-		console.log(this.state);
-
-		const data = { name: this.state.name, email:this.state.email, phone: this.state.phno, password:this.state.password}
-		fetch('http://localhost/3005/users/add', { 
-			method: 'POST', 
-			body: JSON.stringify(data),
-			headers:{ 'Content-Type': 'application/json' } })
-			.then( res => res.json())
-			.catch(err => console.log('error == ' , err))  
-			.then(response => console.log('inserted ', response));
-		}
-	
 	componentDidMount() {
 		document.title = 'PRS log in or sign up';
-		// const url = 'http://localhost/:3005/users';
-    	// fetch(url)
-      	// 	.then(results =>{
-		// 		  return results.json();
-		// 	  })
-	
-		// const options = {
-		// 	method: 'POST',
+	}
 
-		// }
-		// const request = new Request('http://localhost/:3005/user', options)
+	newUser(e,name,email,password,conpassword,phno){
+		e.preventDefault();
+
+		if(this.state.name.length>0 && this.state.email.length > 0 && this.state.password.length>0) {
+			if(this.state.phno.length === 10){
+				if(this.state.password === this.state.conpassword){
+				console.log(name,email,password,conpassword,phno);
+				alert('registered')
+				// make an api call of type POST into db
+				// if(api call sucessfull => move to welcome page)
+				// goToNextPage({
+		
+				// })
+				} else {
+				this.setState({
+					errorMessage: "Password did not match"
+				})}
+			}else {
+				this.setState({
+					errorMessage: "Invalid phone number"
+				})
+			}
+		} else {
+			this.setState({
+                errorMessage: "Please enter valid details"
+            });
+		}
+		//console.log(this.setState) 
 	}
 
 	render() {
+
+		const { name, email, password,conpassword, phno, errorMessage} = this.state;
+		
+		
 		return (
 			<div className="FormCenter">
 				{this.componentDidMount()}
 
-				<div className="App-header"><h1>Place Review System</h1></div>
-				<div className="FormTitle">
-					<Link to="/sign-in"  className="FormTitle__Link">Sign In </Link>  or
-                    <Link to="/sign-up"  className="FormTitle__Link"> Sign Up</Link>
+				<div className="App-header">
+					<h1>Place Review System</h1>
 				</div>
+
+				<div className="FormTitle">
+					<Link to="/sign-in"  className="FormTitle__Link">LOGIN </Link>  or
+                    <Link to="/sign-up"  className="FormTitle__Link"> REGISTER</Link>
+				</div>
+
 				<div className="PageSwitcher">
-					<NavLink to="/sign-in" activeClassName="PageSwitcher__Item--Active" className="PageSwitcher__Item">Sign In</NavLink>
-					<NavLink to="/sign-up" activeClassName="PageSwitcher__Item--Active" className="PageSwitcher__Item">Sign Up</NavLink>
+					<NavLink to="/sign-in" 
+					activeClassName="PageSwitcher__Item--Active" 
+					className="PageSwitcher__Item">LOGIN
+					</NavLink>
+	
+					<NavLink to="/sign-up" 
+					activeClassName="PageSwitcher__Item--Active" 
+					className="PageSwitcher__Item">REGISTER
+					</NavLink>
 				</div>
 
 				<form onSubmit={this.handleSubmit} className="FormFields">
 
 					<div className="FormField">
 						<label className="FormField__Label" htmlFor="name">Name</label>
-						<input type="text" id="name" className="FormField__Input" placeholder="Enter your name" name="name" value={this.state.name} onChange={this.handleChange} />
+						<input type="text" 
+						id="name" 
+						className="FormField__Input" 
+						placeholder="Enter your name" 
+						name="name" 
+						value={name} 
+						onChange={this.handleChange} />
 					</div>
 
 					<div className="FormField">
 						<label className="FormField__Label" htmlFor="email">Email Address</label>
-						<input type="email" id="email" className="FormField__Input" placeholder="Enter your Email" name="email" value={this.state.email} onChange={this.handleChange} />
+						<input type="email" 
+						id="email"
+						className="FormField__Input"
+						 placeholder="Enter your Email" 
+						 name="email" 
+						 value={email} 
+						 onChange={this.handleChange} />
 					</div>					
 
 					<div className="FormField">
 						<label className="FormField__Label" htmlFor="password">Password</label>
-						<input type="password" id="password" className="FormField__Input" placeholder="Enter your password" name="password" value={this.state.password} onChange={this.handleChange} />
+						<input type="password" 
+						id="password" 
+						className="FormField__Input" 
+						placeholder="Enter your password" 
+						name="password" 
+						value={password} 
+						onChange={this.handleChange} />
 					</div>
 
 					<div className="FormField">
 						<label className="FormField__Label" htmlFor="conpassword">Confirm Password</label>
-						<input type="password" id="conpassword" className="FormField__Input" placeholder="Re-enter your password" name="conpassword" value={this.state.conpassword} onChange={this.handleChange} />
+						<input type="password" 
+						id="conpassword" 
+						className="FormField__Input" 
+						placeholder="Re-enter your password" 
+						name="conpassword" 
+						value={conpassword}
+						onChange={this.handleChange} />
 					</div>
 
 					<div className="FormField">
 						<label className="FormField__Label" htmlFor="phno">Phone no</label>
-						<input type="text" id="phoneno" className="FormField__Input" placeholder="Enter your phone no" name="phone" value={this.state.phone} onChange={this.handleChange} />
+						<input type="number" 
+						pattern="[0-9]*"	
+						id="number" 
+						className="FormField__Input" 
+						placeholder="Enter your phone no" 
+						name="phno" 
+						value={phno}
+						onChange={this.handleChange} />
 					</div>
 
 					<div className="FormField">
-						<Link to="/welcomePage"><button onClick={() => { alert('Registered successful')}} className="FormField__Button mr-20">Sign Up</button> </Link>
-						<Link to="/sign-up" className="FormField__Link">I'm already member</Link>
+							<Link to="/welcomePage">
+							
+							<h2 style={{ color: "white", margin:20 }}>
+							{errorMessage} 
+							</h2>
+							<button 
+							onClick={e => this.newUser(e,name,email,password,conpassword,phno)}
+							className="FormField__Button mr-20"> REGISTER
+							</button> 
+							</Link>
+						
 					</div>
+					
 
 					<Route excat path="/welcomePage" component={WelcomePage} />
 				</form>

@@ -21,6 +21,8 @@ class SignInForm extends Component {
     this.setState({
       [name]: value
     });
+
+
   }
 
   handleSubmit(e) {
@@ -40,13 +42,13 @@ class SignInForm extends Component {
         <div className="App-header"><h1>Place Review System</h1></div>
 
             <div className="FormTitle">
-              <Link to="/sign-in" className="FormTitle__Link">Sign In </Link>  or
-              <Link to="/sign-up" className="FormTitle__Link"> Sign Up</Link>
+              <Link to="/sign-in" className="FormTitle__Link">LOGIN </Link>  or
+              <Link to="/sign-up" className="FormTitle__Link"> REGISTER </Link>
             </div>
             
             <div className="PageSwitcher">
-              <NavLink to="/sign-in" activeClassName="PageSwitcher__Item--Active" className="PageSwitcher__Item">Sign In</NavLink>
-              <NavLink to="/sign-up" activeClassName="PageSwitcher__Item--Active" className="PageSwitcher__Item">Sign Up</NavLink>
+              <NavLink to="/sign-in" activeClassName="PageSwitcher__Item--Active" className="PageSwitcher__Item">LOGIN</NavLink>
+              <NavLink to="/sign-up" activeClassName="PageSwitcher__Item--Active" className="PageSwitcher__Item">REGISTER</NavLink>
             </div>
 
           <form onSubmit={this.handleSubmit} className="FormFields">
@@ -62,7 +64,7 @@ class SignInForm extends Component {
               </div>
 
               <div className="FormField">
-                <Link to="/welcomePage"><button onClick={() => { alert('Login Successful ') }} className="FormField__Button mr-20">Sign In</button> </Link>
+                <Link to="/welcomePage"><button onClick={() => { alert('Login Successful ') }} className="FormField__Button mr-20">LOGIN</button> </Link>
                 <Link to="/sign-up" className="FormField__Link">Create an account</Link>
               </div>
           

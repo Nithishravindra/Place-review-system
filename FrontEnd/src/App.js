@@ -13,12 +13,12 @@ class App extends Component {
   return  <Router >
         <Switch>
             <Route path='/' exact={true} component={ SignInForm } />
-            <Route  exact path="/sign-in" component={ SignInForm }></Route>     
-            <Route  exact path="/sign-up" component={ SignUpForm }></Route> 
-            <Route  exact path="/404" component={ NotFoundPage }></Route>
-            <Route  exact path="/welcomePage" component={ WelcomePage }></Route>    
-            <Route  path="/ratingPage/:placeName" component={ RatingPage }></Route> 
-            <Route  path="/feedBackPage" component={ feedBackPage }></Route> 
+            <Route  exact path="/sign-in" component={ SignInForm } />     
+            <Route  exact path="/sign-up" component={ SignUpForm } /> 
+            <Route  exact path="/404" component={ NotFoundPage } />
+            <Route  exact path="/welcomePage" component={ WelcomePage }/>    
+            <Route  path="/ratingPage/:placeName" component={ RatingPage }/> 
+            <Route  path="/feedBackPage" component={ feedBackPage }/> 
             <Redirect to='/404'></Redirect>
          </Switch>
     </Router>
