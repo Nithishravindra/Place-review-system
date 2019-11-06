@@ -7,10 +7,11 @@ class SignInForm extends Component {
     super();
     this.state = {
       email: '',
-      password: ''
+      password: '',
+      errorMessage: ''
     };
     this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
+   // this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   handleChange(e) {
@@ -21,21 +22,49 @@ class SignInForm extends Component {
     this.setState({
       [name]: value
     });
-
-
   }
 
-  handleSubmit(e) {
+  handleSubmit(e, email, password) {
     e.preventDefault();
     console.log('The form was submitted with the following data:');
     console.log(this.state);
+    if(email.length > 0 && password.length > 0){
+      fetch(`http://localhost:3000/users/login`, {
+					method: "POST",
+					 body: JSON.stringify({
+						email: this.state.email,
+						password: this.state.password
+					}),
+					headers: {
+						"Content-type": "application/json",
+						Accept: "application/json"
+					}
+				})
+          .then( res =>{
+             console.log(res.json())
+          })
+					.then(data => {
+						//console.log(data);
+					})	
+
+    } else {
+
+      this.setState({
+        errorMessage: "Please enter email/password"
+      })
+    
+    }
+
   }
 
   componentDidMount() {
     document.title = 'PRS log in or sign up';
   }
  
+  
   render() {
+    const {email, password, errorMessage} = this.state;
+
     return (
       <div className="FormCenter">
         {this.componentDidMount()}
@@ -64,7 +93,9 @@ class SignInForm extends Component {
               </div>
 
               <div className="FormField">
-                <Link to="/welcomePage"><button onClick={() => { alert('Login Successful ') }} className="FormField__Button mr-20">LOGIN</button> </Link>
+                <Link to="/welcomePage">
+                  <h2 style={{margin: 30}}> {errorMessage}</h2>
+                  <button onClick={ e => this.handleSubmit(e, email, password)} className="FormField__Button mr-20">LOGIN</button> </Link>
                 <Link to="/sign-up" className="FormField__Link">Create an account</Link>
               </div>
           

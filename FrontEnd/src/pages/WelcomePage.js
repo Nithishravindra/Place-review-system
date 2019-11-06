@@ -9,6 +9,8 @@ class App extends Component {
 		this.state = {
 			placeTitle: "",
 			description: "",
+			errorMessage: "",
+			
 			// listOfplaces ---> API
 			listOfPlaces: [
 				{
@@ -150,14 +152,47 @@ class App extends Component {
 		});
 	  }
 	
-	handleSubmit(e) {
+	handleSubmit(e , placeTitle, description) {
 		e.preventDefault();
 		console.log('The form was submitted with the following data:');
 		console.log(this.state);
+ 		if(placeTitle.length>0 && description.length > 0){
+				fetch(`https://localhost:3000/places/add`, {
+					method: "POST",
+					body: JSON.stringify({
+						placeTitle: this.state.placeTitle,
+						description: this.state.description,
+						userId : 1
+					}),
+					headers: {
+						"Content-type": "application/json",
+						Accept: "application/json"
+					}
+				})
 
-		this.setState(previousState => ({
-			listOfPlaces: [...previousState.listOfPlaces, { title: this.state.placeTitle, description: this.state.description  }]
-		}));
+				.then(res => res.json())
+					.then(data => {
+						console.log(data);
+					})	
+				// 	.then(res => res.json())
+				// 	.then(data => {
+				// 		 this.setState({
+				// 		// 	// @N Update correct dummy data with listOfPlaces
+				// 			dummyData: data,
+				// 			isLoading: false
+				// 		 });
+				// 	});
+					
+				// this.setState(previousState => ({
+				// 	listOfPlaces: [...previousState.listOfPlaces, { title: this.state.placeTitle, description: this.state.description  }]
+				// }));
+		} else  {
+			this.setState({
+				errorMessage:"Please fill fields"
+			})
+	}
+
+
 	}
 
 	componentDidMount() {
@@ -165,7 +200,7 @@ class App extends Component {
 	}
 
 	render() {
-		const { placeTitle, description, listOfPlaces } = this.state;
+		const { placeTitle, description, listOfPlaces, errorMessage } = this.state;
 
 		return (
 			<div className="Ap">
@@ -223,9 +258,25 @@ class App extends Component {
 							onChange={this.handleChange}/>
                 		</div>    
 
-						<button className="FormT_button" 
-						onClick={this.handleSubmit}>SUBMIT</button> 
+						<div className="validation_welcomepage">
+						<h2 style={{margin: 30}}> {errorMessage}</h2>
+							<button
+							onClick={ e => this.handleSubmit(e, placeTitle, description)}  className="FormT_button" >
+							SUBMIT</button> 
+							</div>
 					</form>
+					<button onClick={async (e) => {
+						e.preventDefault();
+						try {
+							const res = await fetch(`http://localhost:3000/users/content`)
+							  console.log(await res.json())
+						} catch (error) {
+							console.error(error.message)
+						};
+
+						
+					}}>Get Details</button>
+
 				</div>
 			 </div>
 		)

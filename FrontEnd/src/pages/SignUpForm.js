@@ -15,7 +15,6 @@ class SignUpForm extends Component {
 
 		};
 		this.handleChange = this.handleChange.bind(this);
-		//this.handleSubmit = this.handleSubmit.bind(this);
 	}
 
 	handleChange(e) {
@@ -34,17 +33,28 @@ class SignUpForm extends Component {
 
 	newUser(e,name,email,password,conpassword,phno){
 		e.preventDefault();
-
 		if(this.state.name.length>0 && this.state.email.length > 0 && this.state.password.length>0) {
 			if(this.state.phno.length === 10){
 				if(this.state.password === this.state.conpassword){
 				console.log(name,email,password,conpassword,phno);
-				alert('registered')
-				// make an api call of type POST into db
-				// if(api call sucessfull => move to welcome page)
-				// goToNextPage({
-		
-				// })
+				fetch(`http://localhost:3000/users/add`, {
+					method: "POST",
+					 body: JSON.stringify({
+						name: this.state.name,
+						email: this.state.email,
+						password: this.state.password,
+						phno: this.state.phno
+					}),
+					headers: {
+						"Content-type": "application/json",
+						Accept: "application/json"
+					}
+				})
+					.then(res => res.json())
+					.then(data => {
+						console.log(data);
+					})	
+					alert('Registered successfully')
 				} else {
 				this.setState({
 					errorMessage: "Password did not match"
@@ -59,17 +69,16 @@ class SignUpForm extends Component {
                 errorMessage: "Please enter valid details"
             });
 		}
-		//console.log(this.setState) 
 	}
 
 	render() {
 
-		const { name, email, password,conpassword, phno, errorMessage} = this.state;
+		const { name, email, password, conpassword, phno, errorMessage} = this.state;
 		
 		
 		return (
 			<div className="FormCenter">
-				{this.componentDidMount()}
+				{/* //{this.componentDidMount()} */}
 
 				<div className="App-header">
 					<h1>Place Review System</h1>
@@ -151,8 +160,7 @@ class SignUpForm extends Component {
 					</div>
 
 					<div className="FormField">
-							<Link to="/welcomePage">
-							
+							<Link to="/welcomePage">	
 							<h2 style={{ color: "white", margin:20 }}>
 							{errorMessage} 
 							</h2>
@@ -164,7 +172,6 @@ class SignUpForm extends Component {
 						
 					</div>
 					
-
 					<Route excat path="/welcomePage" component={WelcomePage} />
 				</form>
 			</div>
