@@ -23,3 +23,6 @@ yarn-debug.log*
 yarn-error.log*
 
 BackEnd/.env
+
+# Ignore yarn.lock
+**/yarn.lock
