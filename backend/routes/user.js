@@ -140,39 +140,35 @@ Router.put("/update", (req, res) => {
 })
 
 
-
-// login authentic 
 Router.post('/login', function(req, res) {
-    var email = req.body.email;
-    var password = req.body.password;
-    
-	 if (email && password) {
-		mysqlConnection.query('SELECT * FROM users WHERE email = ? AND password = ?', [email, password], function(error, results, fields) {
-            let RawData = JSON.stringify(results)
-            let newUserJson = JSON.parse(RawData); 
-            let user_id;
-			if (results.length > 0) {
-                let currentUserId=newUserJson[0].USER_ID;
-                
-                req.session.userId = currentUserId
-             
-                res.send({ message: "login successful!", userId: req.session.userId});
-            } else {
-                res.send({ message:'Incorrect Username and/or Password!'});
-			}			
-		});
-	} else {
-		res.send({message:'Please enter Username and Password!'});
-	}
+    const {email, password} = req.body;
+  
+    if (email && password) {
+      mysqlConnection.query(
+        'SELECT * FROM users WHERE email = ? AND password = ?',
+        [email, password],
+  
+        function(error, results, fields) {
+          if (results.length > 0) {
+            // @nithisravindra Fix below.
+            const RawData = JSON.stringify(results);
+            const newUserJson = JSON.parse(RawData);
+  
+            const userID = newUserJson[0].USER_ID;
+            const jwt = require('jsonwebtoken');
+            const token = jwt.sign({userID}, process.env.JWT_SECRET, {
+              expiresIn: '7d'
+            });
+            
+            res.send({token});
+          } else {
+            res.send({error: {message: 'Invalid credentials!'}});
+          }
+        }
+      );
+    } else {
+      res.send({message: 'Please enter Username and Password!'});
+    }
 });
-
-Router.get('/content', function(req, res) {
-    if(req.session.userId === 47) res.send("Yess! You're the one")
-})
-
-Router.get('/session', function(req, res){
-    console.log('hey')
-    console.log(req.session)
-})
 
 module.exports = Router;
