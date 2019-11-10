@@ -1,7 +1,11 @@
-const bodyParser = require('body-parser');
 const express = require("express");
 const Router = express.Router();
 const mysqlConnection = require('../connection');
+const {isAuthorized} = require('../utils'); 
+const jwt = require('jsonwebtoken');
+
+const cookieParser = require('cookie-parser');
+Router.use(cookieParser());
 
 // to get all PLACES
 Router.get("/", (req, res) => {
@@ -36,41 +40,41 @@ Router.delete("/delete/:id", (req, res) => {
     })
 })
 
-// to INSERT an PLACE
-// Router.post("/add", (req, res) => {
-//     let place  = req.body;
-   
-//     let sqll = ' INSERT INTO users (name, email, password, phno) VALUES ' + '(' +   "'" + place.PLACE_TITLE + "'" + ',' + "'" + place.PLACE_DESCRIPTION + "'"  + ',' + "'" + place.PLACE_DESCRIPTION  +"'" + ',' +  place.USERS_USER_ID +')';
-//     mysqlConnection.query(sqll,(error, rows, fields) => {
-//         res.render('USER_ID');
-//         if(!error){
-//              rows.forEach(element => {
-//              if(element.constructor == Array)
-//                     res.send('INSERTED  PLACE_ID = ' + element[0].PLACE_ID);
-//             });
-//         } else {
-//             console.log(error);
-//         }
-//     })
-// })
+
+Router.post("/add", isAuthorized, (req, res) => {
 
 
-Router.post("/add", (req, res) => {
     let usr  = req.body;
-    console.log(usr);
-    console.log('seesonnnnn ',req.session.userId);
-    let sqll = ' INSERT INTO places (place_title, place_description, users_user_id) VALUES ' + '(' +   "'" + usr.PLACE_TITLE + "'" + ',' + "'" + usr.PLACE_DESCRPTION + "'"  + ',' + "'" + usr.USERS_USER_ID  +"'" +  ')';
-    console.log(sqll);
-    mysqlConnection.query(sqll,(error, rows, fields) => {
+    let token = req.cookies.token
+    console.log( 'reqookie' ,token)
+    
+    // try {
+    //     jwt.verify(token,  process.env.JWT_SECRET, (err, authData) => {
+    //         console.log('token = ', req.token)
+    //         if(err) {
+    //             console.log(err)
+    //             res.send("Error")
+    //         } else {
+                
+    //             authData
+    //             console.log('authoo data = ',authData.userID)
+    //             res.send({userID: authData.userID })
+    //         }
+    //     })
+    // } catch (error) {
+    //     throw error
+    // }
+    
+    USERS_USER_ID = 1;
+    mysqlConnection.query('INSERT INTO places (place_title, place_description, users_user_id) VALUES (?, ?, ?)',
+    [placeTitle, description, USERS_USER_ID],(error, rows, fields) => {
         if(!error) {
-            console.log('seesonnnnn ',req.session.userId);
-            //send(email);
             console.log('new place added');
             res.send('inserted');
             //res.redirect('/welcomePage')
         } else {
             console.log(error)
-            res.send('Invalid email or inputs');
+            res.send('Enter valid details');
         }
     })
 })

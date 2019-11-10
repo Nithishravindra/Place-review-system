@@ -1,61 +1,12 @@
-require('dotenv').config();
 const express = require("express");
 const Router = express.Router();
 const mysqlConnection = require('../connection');
 const sgMail = require('@sendgrid/mail');
 sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 const cookieParser = require('cookie-parser')
-const bodyParser = require('body-parser')
-// const session = require('express-session')
 
-Router.use(bodyParser.json());      
 Router.use(cookieParser());
 
-
-
-
-// var express 
-
-
-
-// app.get('/login', function (req, res) {
-//     if (!req.query.username || !req.query.password) {
-//       res.send('login failed');    
-//     } else if(req.query.username === "amy" || req.query.password === "amyspassword") {
-//       req.session.user = "amy";
-//       req.session.admin = true;
-//       res.send("login success!");
-//     }
-//   });
-
-
-
-// Router.use(session ,{
-//     'user_id':'dasfas'
-// })
-
-// Router.get('/session', (req, res, next) => {
-//     console.log(session)
-//     res.send('session', res)
-// })
-// Router.use(session({
-//     secret: 'keyboard cat',
-//     name: 'abcdefg',
-//     //store: sessionStore, 
-//     proxy: true,
-//     resave: true,
-//     saveUninitialized: true
-//   }))
-
-//  function send  ({ email })  {
-//     console.log('emai
-    
-//      new Promise((resolve, reject) => {
-//       sgMail.send(message, (error, info) =>
-//         error ? reject(error) : resolve(info)
-//       )
-//     })
-//   }
 
 // to get all USERS
 Router.get("/", (req, res) => {
@@ -92,20 +43,19 @@ Router.delete("/delete/:id", (req, res) => {
 
 // to INSERT an user 
 Router.post("/add", (req, res) => {
+    
     let usr  = req.body;
     let sqll = ' INSERT INTO users (name, email, password, phno) VALUES ' + '(' +   "'" + usr.name + "'" + ',' + "'" + usr.email + "'"  + ',' + "'" + usr.password  +"'" + ',' +  usr.phno +')';
     console.log(sqll);
     mysqlConnection.query(sqll,(error, rows, fields, next) => {
         if(!error) {
-           
-            const msg = {
+               const msg = {
                 to: "nithishravindra8@gmail.com",
                 from: "nithishravindra8@gmau",
                 subject: 'PLACE REVIEW SYSTEM',
                 text: 'Thanks for registering to place-reviewe-system',
               }
-         
-          // sgMail.send(msg, (error, result) => {
+           // sgMail.send(msg, (error, result) => {
            // if (error) {
             //    console.log(error)
             // }
@@ -141,8 +91,8 @@ Router.put("/update", (req, res) => {
 
 
 Router.post('/login', function(req, res) {
-    const {email, password} = req.body;
-  
+     
+    const { email, password } = req.body;
     if (email && password) {
       mysqlConnection.query(
         'SELECT * FROM users WHERE email = ? AND password = ?',
@@ -150,17 +100,31 @@ Router.post('/login', function(req, res) {
   
         function(error, results, fields) {
           if (results.length > 0) {
-            // @nithisravindra Fix below.
-            const RawData = JSON.stringify(results);
-            const newUserJson = JSON.parse(RawData);
-  
-            const userID = newUserJson[0].USER_ID;
+            const newUserJson = JSON.parse(results[0].USER_ID);
+            console.log(email, password)
+            const userID = newUserJson
+            console.log(userID);
+            
             const jwt = require('jsonwebtoken');
             const token = jwt.sign({userID}, process.env.JWT_SECRET, {
-              expiresIn: '7d'
+              expiresIn: '10h'
             });
-            
-            res.send({token});
+
+            res.cookie('token', token, 
+            { maxAge: 1000000})
+            //res.redirect(302,'localhost:3001/welcomePage')
+           
+            // localStorage.setItem('TokenID',token);
+            // WHat should I do ? Run the program and demosn
+            // let headers = new Headers()
+            // var abc = localStorage.getItem('TokenID');
+            // headers.append('Autherization',abc);
+            // console.log(abc)
+            // http.method('/places',{headers:headers}).then(result=>{
+            //     console.log(result);
+            // });
+
+           // return res.redirect('localhost:3001/welcomePage',302)
           } else {
             res.send({error: {message: 'Invalid credentials!'}});
           }
@@ -170,5 +134,4 @@ Router.post('/login', function(req, res) {
       res.send({message: 'Please enter Username and Password!'});
     }
 });
-
-module.exports = Router;
+module.exports = Router; 
