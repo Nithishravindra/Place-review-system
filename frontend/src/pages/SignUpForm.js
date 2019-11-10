@@ -18,12 +18,8 @@ class SignUpForm extends Component {
 	}
 
 	handleChange(e) {
-		let target = e.target;
-		let value = target.type === 'checkbox' ? target.checked : target.value;
-		let name = target.name;
-		
 		this.setState({
-		  [name]: value
+		  [e.target.name]: e.target.value
 		});
 	}
 
@@ -54,7 +50,7 @@ class SignUpForm extends Component {
 					.then(data => {
 						console.log(data);
 					})	
-					alert('Registered successfully')
+					// alert('Registered successfully')
 				} else {
 				this.setState({
 					errorMessage: "Password did not match"

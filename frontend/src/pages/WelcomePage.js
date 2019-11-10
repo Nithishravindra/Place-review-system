@@ -154,15 +154,13 @@ class App extends Component {
 	
 	handleSubmit(e , placeTitle, description) {
 		e.preventDefault();
-		console.log('The form was submitted with the following data:');
-		console.log(this.state);
  		if(placeTitle.length>0 && description.length > 0){
-				fetch(`https://localhost:3000/places/add`, {
+			console.log(placeTitle, description);
+				fetch(`http://localhost:3000/places/add`, {
 					method: "POST",
 					body: JSON.stringify({
 						placeTitle: this.state.placeTitle,
-						description: this.state.description,
-						userId : 1
+						description: this.state.description
 					}),
 					headers: {
 						"Content-type": "application/json",
@@ -171,9 +169,9 @@ class App extends Component {
 				})
 
 				.then(res => res.json())
-					.then(data => {
-						console.log(data);
-					})	
+				.then(data => {
+					console.log(data);
+				})	
 				// 	.then(res => res.json())
 				// 	.then(data => {
 				// 		 this.setState({
@@ -183,14 +181,15 @@ class App extends Component {
 				// 		 });
 				// 	});
 					
-				// this.setState(previousState => ({
-				// 	listOfPlaces: [...previousState.listOfPlaces, { title: this.state.placeTitle, description: this.state.description  }]
-				// }));
+				this.setState(
+					previousState => ({
+					listOfPlaces: [...previousState.listOfPlaces, { title: this.state.placeTitle, description: this.state.description  }]
+				}));
 		} else  {
 			this.setState({
 				errorMessage:"Please fill fields"
 			})
-	}
+		}	
 
 
 	}
@@ -211,7 +210,6 @@ class App extends Component {
 
 				
 				<div className="FormFieldB">
-					
 					<div className="FormTitle">
                        	 {listOfPlaces.map((item, index) => (
                          	   <Link
@@ -265,17 +263,6 @@ class App extends Component {
 							SUBMIT</button> 
 							</div>
 					</form>
-					<button onClick={async (e) => {
-						e.preventDefault();
-						try {
-							const res = await fetch(`http://localhost:3000/users/content`)
-							  console.log(await res.json())
-						} catch (error) {
-							console.error(error.message)
-						};
-
-						
-					}}>Get Details</button>
 
 				</div>
 			 </div>

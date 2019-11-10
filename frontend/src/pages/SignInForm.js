@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Link, Route, NavLink } from 'react-router-dom';
 import WelcomePage from './WelcomePage';
+import store from 'store'
 
 class SignInForm extends Component {
   constructor() {
@@ -15,12 +16,8 @@ class SignInForm extends Component {
   }
 
   handleChange(e) {
-    let target = e.target;
-    let value = target.type === 'checkbox' ? target.checked : target.value;
-    let name = target.name;
-    
     this.setState({
-      [name]: value
+      [e.target.name]: e.target.value
     });
   }
 
@@ -40,13 +37,19 @@ class SignInForm extends Component {
 						Accept: "application/json"
 					}
 				})
-          .then( res =>{
-             console.log(res.json())
+          .then(res =>{
+            console.log('hey token ')
+          
+             var token = res.json();
+             console.log(token)
           })
 					.then(data => {
-						//console.log(data);
-					})	
-
+						
+          })	
+          
+          store.set('logged in')
+          //this.context.history.push('/welcomePage')
+          
     } else {
 
       this.setState({
@@ -64,6 +67,7 @@ class SignInForm extends Component {
   
   render() {
     const {email, password, errorMessage} = this.state;
+    const { history } = this.props
 
     return (
       <div className="FormCenter">
@@ -93,9 +97,11 @@ class SignInForm extends Component {
               </div>
 
               <div className="FormField">
-                <Link to="/welcomePage">
+               
                   <h2 style={{margin: 30}}> {errorMessage}</h2>
-                  <button onClick={ e => this.handleSubmit(e, email, password)} className="FormField__Button mr-20">LOGIN</button> </Link>
+                  <button onClick={ e => this.handleSubmit(e, email, password)} className="FormField__Button mr-20"> LOGIN</button> 
+                  <Link to="/welcomePage"></Link>
+                
                 <Link to="/sign-up" className="FormField__Link">Create an account</Link>
               </div>
           

@@ -7,53 +7,106 @@ import { Component } from 'react';
 	constructor() {
 		super();
 		this.state = {
-            feedback: " ",	
-            
+			feedback: '',
+			radio1: 'Yes',
+			errorMessage: ''
             
 		};
-		
 		this.handleChange = this.handleChange.bind(this);
-		this.handleSubmit = this.handleSubmit.bind(this);
+		
+	}
+	
+	Logout(){
+		// store.remove('logged in')
+		// history.pushState('./sign-in')
 	}
 
 	handleChange(e) {
 		this.setState({
-		  [e.target.name]: e.target.value
-	});
+			 [e.target.name] : e.target.value
+		});
 	}
 	
-	handleSubmit(e) {
-        e.preventDefault();
-        this.setState()
-        alert('thanks for your feedback');
+	handleSubmit(e, feedback, radio1) {
+		e.preventDefault();
+		console.log(feedback, radio1)
+		if(feedback.length>0){
+		console.log( 'handle submit => ',feedback, radio1)
+	 	fetch(`http://localhost:3000/feedback/add`, {
+					method: "POST",
+					body: JSON.stringify({
+						feedback: this.state.feedback,
+						radio: this.state.radio1
+					}),
+					headers: {
+						"Content-type": "application/json",
+						Accept: "application/json"
+					}
+				})
+		.then(res => res.json())
+		.then(data => {
+				console.log(data);
+		})	
+	   //alert(`thanks for your feedback ${this.state.selectedOption}`);
+	}	else {
+		this.setState({
+			errorMessage: "Please fill fields"
+		})
+	} 
+	
 	}
-    
+
+
 	render() {
-        const  feedback  = this.state;
+        const  {feedback, radio1, errorMessage}  = this.state;
+
 		return (
 			<div className="Ap">
 				<div className="FormFieldB">
-				   <form onSubmit={this.handleSubmit}>
+				   
 					    <h3> was this site helpful?</h3>	
-                        
-						<div className="radio_feedback">
-                            <div className="radio_button">
-							<input type="radio" name="radio1" onChange={this.handleChange} />							
-								<h5>YES</h5>
-							</div>
-							
-							<div className="radio_button">
-							<input type="radio" name="radio1" onChange={this.handleChange}/> 
-								<h5>NO</h5>
-                            </div>
+                        <form onSubmit={this.handleSubmit}> 
 						
-						</div>
+							<div className="radio_feedback">
+								<div className="radio_button">
+						
+									<input type="radio" 
+									name = "radio1"  
+									value = "Yes" 
+									checked={this.state.radio1==="Yes"} 
+									onChange={this.handleChange}/>							
+										<h5>YES</h5>
+									</div>
+								
+									<div className="radio_button">
+									<input type="radio" 
+									name = "radio1"  
+									value = "No" 
+									checked={this.state.radio1 === "No"}
+									onChange={this.handleChange}/> 
+										<h5>NO</h5>
+									</div>
+							</div>
+							radio1: {this.state.radio1}   
 
-                            <div className="FormFText">
-                    			<textarea type="text" placeholder="provide your feedback here" defaultValue={feedback} onChange={this.handleChange}/>
-                			</div>  
-                            <button className="FormT_button" onClick={this.handleSubmit}>SUBMIT</button> 
-					</form>
+							<div className="FormFText">
+								<textarea type="text" 
+								placeholder="provide your feedback here" 
+								defaultValue={feedback} 
+								name="feedback"
+								onChange={this.handleChange}/>
+							</div>  
+							
+						
+							<div className="validation_feedbackPage">
+							<h2 style={{margin: 30}}> {errorMessage}</h2>
+							<button className="FormT_button" 
+							onClick = { e => this.handleSubmit( e, feedback, radio1 )}>
+							SUBMIT</button>  
+							</div>
+			
+					<button className="FormT_button" onClick={this.Logout()}>Logout</button> 
+				</form>
 				</div>
 			 </div>
 		)
