@@ -1,8 +1,7 @@
 const bodyParser = require('body-parser');
 const express = require("express");
 const Router = express.Router();
-const mysqlConnection = require('../connection');
-const { isAuthorized } = require('../utils'); 
+
 
 Router.get("/", (req, res) => {
     mysqlConnection.query('SELECT * FROM feedback', (error, rows, fields) => {
@@ -37,7 +36,7 @@ Router.delete("/delete/:id", (req, res) => {
 })
 
 // to INSERT an FEEDBACK
-Router.post("/add", isAuthorized,(req, res) => {
+Router.post("/add", (req, res) => {
     let usr  = req.body;
     console.log(usr);
     const token = req.header.authorization.split(" ")[1];

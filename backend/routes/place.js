@@ -1,11 +1,6 @@
 const express = require("express");
 const Router = express.Router();
 const mysqlConnection = require('../connection');
-const {isAuthorized} = require('../utils'); 
-const jwt = require('jsonwebtoken');
-
-const cookieParser = require('cookie-parser');
-Router.use(cookieParser());
 
 // to get all PLACES
 Router.get("/", (req, res) => {
@@ -41,40 +36,17 @@ Router.delete("/delete/:id", (req, res) => {
 })
 
 
-Router.post("/add", isAuthorized, (req, res) => {
-
-
+// to insert a place 
+Router.post("/add",  (req, res) => {
     let usr  = req.body;
-    let token = req.cookies.token
-    console.log( 'reqookie' ,token)
-    
-    // try {
-    //     jwt.verify(token,  process.env.JWT_SECRET, (err, authData) => {
-    //         console.log('token = ', req.token)
-    //         if(err) {
-    //             console.log(err)
-    //             res.send("Error")
-    //         } else {
-                
-    //             authData
-    //             console.log('authoo data = ',authData.userID)
-    //             res.send({userID: authData.userID })
-    //         }
-    //     })
-    // } catch (error) {
-    //     throw error
-    // }
-    
-    USERS_USER_ID = 1;
+    console.log(usr.placeTitle, usr.description, usr.userID)
     mysqlConnection.query('INSERT INTO places (place_title, place_description, users_user_id) VALUES (?, ?, ?)',
-    [placeTitle, description, USERS_USER_ID],(error, rows, fields) => {
+    [usr.placeTitle, usr.description, usr.userID],(error, rows, fields) => {
         if(!error) {
             console.log('new place added');
-            res.send('inserted');
-            //res.redirect('/welcomePage')
+            res.status(200).send({'statusCode': 200, 'Message': usr.userID})    
         } else {
-            console.log(error)
-            res.send('Enter valid details');
+            res.status(401).send({statusCode:401, message: 'Place already exists'});
         }
     })
 })

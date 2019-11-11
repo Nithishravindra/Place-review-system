@@ -9,6 +9,7 @@ class Rating extends Component {
     constructor() {
         super();
         this.state = {
+            userID: "",
             userComment: "",
             userRating: 0,
             errorMessage: ""
@@ -16,20 +17,78 @@ class Rating extends Component {
         this.handleChange = this.handleChange.bind(this);
     }
 
-    handleRating = e => {
-        // to get count of stars clicked by user
-        this.setState({
-            userRating: e.rating
-        });
+    Logout = () => {
+        localStorage.removeItem('userID')
+        //localStorage.removeItem(userID);
+        // fetch(`http://localhost:3000/logout`, {
+        //     method: "POST",
+        //      body: JSON.stringify({
+        //          //to add current userID
+        //        //userId
+        //     }),
+        //     headers: {
+        //         "Content-type": "application/json",
+        //         Accept: "application/json"
+        //     }
+        // })
+        //     .then(res => res.json())
+        //     .then(data => {
+        //         console.log(data);
+        //     })	
     }
 
     addNewComment = (placeId, e) => {
         e.preventDefault();
+        console.log(this.state.userRating)
+        const userID = localStorage.getItem('userID');
+        console.log('userID in ratingPage  = ', userID)
+        if(this.state.userRating > 0){
+            this.setState({
+                errorMessage: " "
+            })
+            fetch(`http://localhost:3000/revStar/add`, {
+                method: "POST",
+                body: JSON.stringify({
+                    
+                    
+                    TOTAL_RATING: this.state.userRating
+                    
+                }),
+                headers: {
+                    "content-type":"application/json",
+                    Accept: "application/json"
+                }
+            })
+            .then(res => res.json())
+            .then(res => {
+                console.log(res)
+            })   
+        }
+        
 
-        if (this.state.userComment.length > 0 && this.state.userRating > 0) {
+        if (this.state.userComment.length > 0 ) {
             this.setState({
                 errorMessage: ""
             });
+
+            fetch(`http://localhost:3000/comment/add`, {
+					method: "POST",
+					 body: JSON.stringify({
+                         // add currentUSERID and Clicketed placeId
+						COMMENT: this.state.userComment
+					}),
+					headers: {
+						"Content-type": "application/json",
+						Accept: "application/json"
+					}
+				})
+            .then(res => {
+                console.log('hey token ', res)                           
+            })
+            .then(data => {
+                console.log(data)          
+            })	
+
             // all to make api call
         } else {
             this.setState({
@@ -46,6 +105,9 @@ class Rating extends Component {
     }
 
     render() {
+
+       //  const userID = localStorage.getItem('userID');
+       // console.log('userID in rating page => ',userID);
         const { userComment, userRating, errorMessage } = this.state;
         const { dataPassed } = this.props.location || [];
         const clickedPlace =
@@ -61,8 +123,6 @@ class Rating extends Component {
 
         return (
             <div className="Appp">
-                <div className="page-left">
-                    
                     <div className="FormFieldA">
                         <h1>{clickedPlace.title}</h1>
                     </div>
@@ -116,6 +176,11 @@ class Rating extends Component {
                                     <p>Comment: {item.commentText}</p>
                                 </div>
                             ))}
+
+                              <button onClick={this.Logout}
+                            className="Form-Button">  LOGOUT
+                            </button> 
+
                         </div>
                     </div>
 
@@ -128,7 +193,7 @@ class Rating extends Component {
                         path="/feedBackPage"
                         component={feedBackPage}
                     />
-                </div>
+                
             </div>
         );
     }

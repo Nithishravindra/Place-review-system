@@ -2,11 +2,13 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import './WelcomePage.css';
 
+
 class App extends Component {
 	// you can initialize state outside constructor different way
 	constructor() {
 		super();
 		this.state = {
+			userID: "",
 			placeTitle: "",
 			description: "",
 			errorMessage: "",
@@ -141,7 +143,6 @@ class App extends Component {
 			dummyData: []
 			
 		};
-
 		this.handleChange = this.handleChange.bind(this);
 		this.handleSubmit = this.handleSubmit.bind(this);
 	}
@@ -153,21 +154,23 @@ class App extends Component {
 	  }
 	
 	handleSubmit(e , placeTitle, description) {
-		e.preventDefault();
+		e.preventDefault(); 
+
+		const userID = localStorage.getItem('userID');
  		if(placeTitle.length>0 && description.length > 0){
-			console.log(placeTitle, description);
+			console.log(placeTitle, description, userID);
 				fetch(`http://localhost:3000/places/add`, {
 					method: "POST",
 					body: JSON.stringify({
 						placeTitle: this.state.placeTitle,
-						description: this.state.description
+						description: this.state.description,
+						userID: userID
 					}),
 					headers: {
 						"Content-type": "application/json",
 						Accept: "application/json"
 					}
-				})
-
+				})	
 				.then(res => res.json())
 				.then(data => {
 					console.log(data);

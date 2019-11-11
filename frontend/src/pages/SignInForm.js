@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link, Route, NavLink } from 'react-router-dom';
 import WelcomePage from './WelcomePage';
-import store from 'store'
+
 
 class SignInForm extends Component {
   constructor() {
@@ -23,8 +23,7 @@ class SignInForm extends Component {
 
   handleSubmit(e, email, password) {
     e.preventDefault();
-    console.log('The form was submitted with the following data:');
-    console.log(this.state);
+    
     if(email.length > 0 && password.length > 0){
       fetch(`http://localhost:3000/users/login`, {
 					method: "POST",
@@ -37,25 +36,23 @@ class SignInForm extends Component {
 						Accept: "application/json"
 					}
 				})
-          .then(res =>{
-            console.log('hey token ')
-          
-             var token = res.json();
-             console.log(token)
+        .then(res => res.json())
+				.then(response => {
+						if(response.statusCode === 200){
+              localStorage.setItem('userID', response.Message)    
+              this.props.history.push(`/welcomePage`)
+            }
+            if(response.statusCode === 401){
+              this.setState({
+                errorMessage: "Invalid Details"
+              })
+            }
           })
-					.then(data => {
-						
-          })	
-          
-          store.set('logged in')
-          //this.context.history.push('/welcomePage')
-          
+                 
     } else {
-
       this.setState({
         errorMessage: "Please enter email/password"
       })
-    
     }
 
   }
@@ -67,7 +64,7 @@ class SignInForm extends Component {
   
   render() {
     const {email, password, errorMessage} = this.state;
-    const { history } = this.props
+   
 
     return (
       <div className="FormCenter">

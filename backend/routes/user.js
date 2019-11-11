@@ -3,8 +3,9 @@ const Router = express.Router();
 const mysqlConnection = require('../connection');
 const sgMail = require('@sendgrid/mail');
 sgMail.setApiKey(process.env.SENDGRID_API_KEY);
-const cookieParser = require('cookie-parser')
 
+
+const cookieParser = require('cookie-parser')
 Router.use(cookieParser());
 
 
@@ -65,11 +66,10 @@ Router.post("/add", (req, res) => {
             // });
 
          //console.log('email sent');
-        res.send('inserted');
-        // res.redirect('/welcomePage')
+        res.status(200).send('inserted');
         } else {
             console.log(error)
-            res.send('Invalid email or inputs');
+            res.status(401).send('Invalid email or inputs');
         }
     })
 })
@@ -91,47 +91,27 @@ Router.put("/update", (req, res) => {
 
 
 Router.post('/login', function(req, res) {
-     
+
+    let usr = req.body;
     const { email, password } = req.body;
+    console.log('emaill == ',email,password, usr)
     if (email && password) {
       mysqlConnection.query(
         'SELECT * FROM users WHERE email = ? AND password = ?',
         [email, password],
-  
         function(error, results, fields) {
           if (results.length > 0) {
             const newUserJson = JSON.parse(results[0].USER_ID);
-            console.log(email, password)
             const userID = newUserJson
             console.log(userID);
-            
-            const jwt = require('jsonwebtoken');
-            const token = jwt.sign({userID}, process.env.JWT_SECRET, {
-              expiresIn: '10h'
-            });
-
-            res.cookie('token', token, 
-            { maxAge: 1000000})
-            //res.redirect(302,'localhost:3001/welcomePage')
-           
-            // localStorage.setItem('TokenID',token);
-            // WHat should I do ? Run the program and demosn
-            // let headers = new Headers()
-            // var abc = localStorage.getItem('TokenID');
-            // headers.append('Autherization',abc);
-            // console.log(abc)
-            // http.method('/places',{headers:headers}).then(result=>{
-            //     console.log(result);
-            // });
-
-           // return res.redirect('localhost:3001/welcomePage',302)
+            res.status(200).send({'statusCode': 200,'Message':userID})      
           } else {
-            res.send({error: {message: 'Invalid credentials!'}});
+            res.status(401).send({'statusCode':401,message: 'Invalid credentials!'});
           }
         }
       );
     } else {
-      res.send({message: 'Please enter Username and Password!'});
+      res.status(401).send({statusCode:401,message: 'Please enter Username and Password!'});
     }
 });
 module.exports = Router; 
