@@ -13,14 +13,19 @@ Router.get("/", (req, res) => {
     })
 })
 
-Router.post("/add", (req, res) => {
-    //get userId and placeId
-    const userId = 1;
+Router.post("/add", (req, res) => { 
     const placeId = 1;
-    
+   // replace placeID  
+    const userID = 2;
     let usr = req.body;
     console.log('responese => ', usr);
-    mysqlConnection.query('insert into comment (COMMENT,USERS_USER_ID,PLACES_PLACE_ID) values(?,?,?)',[usr.COMMENT,userId,placeId], (error, rows, fields) => {
+
+  
+    var params = [usr.COMMENT, usr.userID, placeId, usr.TOTAL_RATING, usr.userID, placeId]
+    console.log(params)
+    
+    mysqlConnection.query('insert into comment (COMMENT,USERS_USER_ID,PLACES_PLACE_ID) values(?,?,?) ;\
+    insert into rating_star (TOTAL_RATING, USERS_USER_ID, PLACES_PLACE_ID) values (?, ?, ?)'  ,params,(error, rows, fields) => {
         if(!error){
             console.log(rows)
             res.send('added comment successfully');

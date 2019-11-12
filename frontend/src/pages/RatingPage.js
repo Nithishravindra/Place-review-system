@@ -11,48 +11,18 @@ class Rating extends Component {
         this.state = {
             userID: "",
             userComment: "",
-            userRating: 0,
+            userRating: "",
             errorMessage: ""
         };
         this.handleChange = this.handleChange.bind(this);
     }
 
-    Logout = () => {
-        localStorage.removeItem('userID')
-        //localStorage.removeItem(userID);
-        // fetch(`http://localhost:3000/logout`, {
-        //     method: "POST",
-        //      body: JSON.stringify({
-        //          //to add current userID
-        //        //userId
-        //     }),
-        //     headers: {
-        //         "Content-type": "application/json",
-        //         Accept: "application/json"
-        //     }
-        // })
-        //     .then(res => res.json())
-        //     .then(data => {
-        //         console.log(data);
-        //     })	
-    }
-
-    addNewComment = (placeId, e) => {
-        e.preventDefault();
-        console.log(this.state.userRating)
-        const userID = localStorage.getItem('userID');
-        console.log('userID in ratingPage  = ', userID)
-        if(this.state.userRating > 0){
-            this.setState({
-                errorMessage: " "
-            })
-            fetch(`http://localhost:3000/revStar/add`, {
+    Logout = (e) => {
+        const cUserID = localStorage.getItem('userID');
+        fetch(`http://localhost:3000/users/logout`, {
                 method: "POST",
                 body: JSON.stringify({
-                    
-                    
-                    TOTAL_RATING: this.state.userRating
-                    
+                    userID: cUserID
                 }),
                 headers: {
                     "content-type":"application/json",
@@ -60,22 +30,38 @@ class Rating extends Component {
                 }
             })
             .then(res => res.json())
-            .then(res => {
-                console.log(res)
-            })   
-        }
-        
+            .then(response => {
+                console.log(response)
+                    if(response.statusCode === 200){
+                        localStorage.removeItem('userID')
+                        alert(`Thank you!`)
+                        this.props.history.push(`/sign-in`)
+                    }
+                    else {
+                        this.setState({
+                            errorMessage: "AUTH failed"
+                        })
+                    }
+            }) 
+    }
+
+    
+    addNewComment = (placeId, e) => {
+        e.preventDefault();
+         console.log('fsafasdfsda',this.state.userRating)
+         const cUserID = localStorage.getItem('userID');
+         console.log('in comment/rating',cUserID)
+         console.log('total raa')
+   
 
         if (this.state.userComment.length > 0 ) {
-            this.setState({
-                errorMessage: ""
-            });
-
             fetch(`http://localhost:3000/comment/add`, {
 					method: "POST",
 					 body: JSON.stringify({
-                         // add currentUSERID and Clicketed placeId
-						COMMENT: this.state.userComment
+                        userID: cUserID,
+                        COMMENT: this.state.userComment,
+                        userRating: this.state.userRating
+
 					}),
 					headers: {
 						"Content-type": "application/json",
@@ -89,12 +75,18 @@ class Rating extends Component {
                 console.log(data)          
             })	
 
-            // all to make api call
+            
         } else {
             this.setState({
                 errorMessage: "Please enter comment & User rating"
             });
         }
+    }
+
+    handleRate(e){
+        const TOTAL_RATING = e.rating;
+        console.log(TOTAL_RATING)
+       
     }
 
     handleChange(event) {
@@ -104,10 +96,9 @@ class Rating extends Component {
         console.log(this.state)
     }
 
+
     render() {
 
-       //  const userID = localStorage.getItem('userID');
-       // console.log('userID in rating page => ',userID);
         const { userComment, userRating, errorMessage } = this.state;
         const { dataPassed } = this.props.location || [];
         const clickedPlace =
@@ -141,7 +132,7 @@ class Rating extends Component {
                                 <h3>Your Rating</h3>
                                 <Rater
                                     rating={userRating}
-                                    onRate={this.handleRating}/>
+                                    onRate={this.handleRate} name = "userRating"/>
                             </div>
                             
                             <div className="FormFieldQ">
@@ -158,7 +149,7 @@ class Rating extends Component {
                                     <div className="FormFieldA">
                                         <button
                                             onClick={e =>
-                                                this.addNewComment(clickedPlace.placeId,e)
+                                                this.addNewComment(clickedPlace.placeId,e,userRating)
                                             }
                                             className="Form-Button">
                                             SUBMIT

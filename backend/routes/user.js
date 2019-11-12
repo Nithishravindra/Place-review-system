@@ -89,12 +89,9 @@ Router.put("/update", (req, res) => {
     })
 })
 
-
 Router.post('/login', function(req, res) {
-
-    let usr = req.body;
+    
     const { email, password } = req.body;
-    console.log('emaill == ',email,password, usr)
     if (email && password) {
       mysqlConnection.query(
         'SELECT * FROM users WHERE email = ? AND password = ?',
@@ -102,16 +99,24 @@ Router.post('/login', function(req, res) {
         function(error, results, fields) {
           if (results.length > 0) {
             const newUserJson = JSON.parse(results[0].USER_ID);
-            const userID = newUserJson
+             const userID = newUserJson
             console.log(userID);
             res.status(200).send({'statusCode': 200,'Message':userID})      
           } else {
             res.status(401).send({'statusCode':401,message: 'Invalid credentials!'});
           }
         }
-      );
+      )
     } else {
       res.status(401).send({statusCode:401,message: 'Please enter Username and Password!'});
     }
-});
+})
+
+Router.post('/logout',  function(req, res) {
+    
+    let logoutUser = req.body;
+    if(logoutUser) res.status(200).send({statusCode:200,message: 'logout successfull'})
+    else res.status(400).send({statusCode:401,message: 'Auth failed'})
+})
+
 module.exports = Router; 
