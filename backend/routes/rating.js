@@ -29,7 +29,7 @@ Router.get("/:id", (req, res) => {
 Router.delete("/delete/:id", (req, res) => {
     mysqlConnection.query('DELETE FROM rating WHERE rating_id = ? ',[req.params.id] ,(error, rows, fields) => {
         if(!error){
-            res.send('Deleted successfully');
+            res.status(200).send('Deleted successfully');
         } else {
             console.log(error);
         }

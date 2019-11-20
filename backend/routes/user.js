@@ -98,7 +98,7 @@ Router.post('/login', function(req, res) {
         [email, password],
         function(error, results, fields) {
           if (results.length > 0) {
-            const newUserJson = JSON.parse(results[0].USER_ID);
+            const newUserJson = (JSON.stringify(results[0].USER_ID));
              const userID = newUserJson
             console.log(userID);
             res.status(200).send({'statusCode': 200,'Message':userID})      

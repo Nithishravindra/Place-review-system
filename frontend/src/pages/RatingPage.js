@@ -15,6 +15,7 @@ class Rating extends Component {
             errorMessage: ""
         };
         this.handleChange = this.handleChange.bind(this);
+        this.handleRate = this.handleRate.bind(this)
     }
 
     Logout = (e) => {
@@ -48,12 +49,7 @@ class Rating extends Component {
     
     addNewComment = (placeId, e) => {
         e.preventDefault();
-         console.log('fsafasdfsda',this.state.userRating)
-         const cUserID = localStorage.getItem('userID');
-         console.log('in comment/rating',cUserID)
-         console.log('total raa')
-   
-
+        const cUserID = localStorage.getItem('userID');
         if (this.state.userComment.length > 0 ) {
             fetch(`http://localhost:3000/comment/add`, {
 					method: "POST",
@@ -85,8 +81,10 @@ class Rating extends Component {
 
     handleRate(e){
         const TOTAL_RATING = e.rating;
-        console.log(TOTAL_RATING)
-       
+        console.log('lololol',TOTAL_RATING)
+        this.setState({
+            userRating: TOTAL_RATING
+        })
     }
 
     handleChange(event) {
@@ -184,7 +182,6 @@ class Rating extends Component {
                         path="/feedBackPage"
                         component={feedBackPage}
                     />
-                
             </div>
         );
     }

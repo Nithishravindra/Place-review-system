@@ -14,26 +14,32 @@ Router.get("/", (req, res) => {
 })
 
 Router.post("/add", (req, res) => { 
-    const placeId = 1;
+    const placeId = 42;
    // replace placeID  
-    const userID = 2;
     let usr = req.body;
-    console.log('responese => ', usr);
-
-  
-    var params = [usr.COMMENT, usr.userID, placeId, usr.TOTAL_RATING, usr.userID, placeId]
-    console.log(params)
-    
-    mysqlConnection.query('insert into comment (COMMENT,USERS_USER_ID,PLACES_PLACE_ID) values(?,?,?) ;\
-    insert into rating_star (TOTAL_RATING, USERS_USER_ID, PLACES_PLACE_ID) values (?, ?, ?)'  ,params,(error, rows, fields) => {
-        if(!error){
-            console.log(rows)
-            res.send('added comment successfully');
-        } else {
-            console.log(error);
-            res.send('Error')
-        }
+    console.log(usr.userID)
+    mysqlConnection.query('SELECT name from users where user_id = ?',usr.userID, (error, rows, fields) => {
+        let userName = rows[0].name;
+        console.log(userName)
+        let params = [usr.COMMENT, userName, usr.userID, placeId, usr.userRating, usr.userID, placeId, placeId,placeId]
+            if(!error){
+                mysqlConnection.query('insert into comment (COMMENT, NAME, USERS_USER_ID, PLACES_PLACE_ID) values(?,?,?,?) ;\
+                insert into rating_star (TOTAL_RATING, USERS_USER_ID, PLACES_PLACE_ID) values (?, ?, ?); \
+                UPDATE rating \
+                SET average_rating = (select ROUND(AVG(TOTAL_RATING),0) FROM RATING_STAR WHERE PLACES_PLACE_ID = ?)\
+                where places_place_id = ?;'  ,params,(error, rows, fields) => {
+                    if(!error){
+                        console.log(rows)
+                        res.status(200).send('added comment successfully');
+                    } else {
+                        console.error(error);
+                    }
+                })
+            } else {
+                res.status(400).send('Error')
+            }
     })
+   
 })
 
 module.exports = Router;
