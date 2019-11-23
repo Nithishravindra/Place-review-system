@@ -4,7 +4,6 @@ import './WelcomePage.css';
 
 
 class App extends Component {
-	// you can initialize state outside constructor different way
 	constructor() {
 		super();
 		this.state = {
@@ -172,18 +171,14 @@ class App extends Component {
 					}
 				})	
 				.then(res => res.json())
-				.then(data => {
-					console.log(data);
+				.then(response => {
+						if(response.statusCode === 401) {
+							this.setState({
+								errorMessage: "Place already exists"
+							})
+						}
 				})	
-				// 	.then(res => res.json())
-				// 	.then(data => {
-				// 		 this.setState({
-				// 		// 	// @N Update correct dummy data with listOfPlaces
-				// 			dummyData: data,
-				// 			isLoading: false
-				// 		 });
-				// 	});
-					
+				
 				this.setState(
 					previousState => ({
 					listOfPlaces: [...previousState.listOfPlaces, { title: this.state.placeTitle, description: this.state.description  }]
@@ -192,14 +187,30 @@ class App extends Component {
 			this.setState({
 				errorMessage:"Please fill fields"
 			})
-		}	
-
-
+		}
 	}
 
 	componentDidMount() {
 		document.title = 'Welcome to PRS';
-	}
+		
+		fetch(`http://localhost:3000/places/listofplaces`, {
+					method: "GET",
+					headers: {
+						"Content-type": "application/json",
+						Accept: "application/json"
+					}
+				})	
+				.then(res => res.json())
+				.then(response => {
+					console.log(response)
+					this.setState(
+						previousState => ({
+							listOfPlaces: [...previousState.listOfPlaces, { title: this.state.title, description: this.state.description}]
+						})
+				)
+			})
+		}	
+
 
 	render() {
 		const { placeTitle, description, listOfPlaces, errorMessage } = this.state;
@@ -219,7 +230,8 @@ class App extends Component {
                             	    to={{
                                     	pathname: `/ratingPage/${item.title}`,
 	                                	dataPassed: {
-											listOfPlaces: listOfPlaces,
+											//listOfPlaces: listOfPlaces,
+											placeTitle : placeTitle,
 											placeId: item.placeId,
 											totalRating: this.state.totalRating,
                                         	addNewComment: (

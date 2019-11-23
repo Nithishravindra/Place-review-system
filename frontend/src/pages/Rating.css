@@ -52,6 +52,22 @@ form {
   box-sizing: border-box;
 }
 
+.Rater-icon {
+  margin-top: 15px;
+  float: right;
+  color: white;
+  font-size: 3em;
+  margin-right: 60px;
+}
+
+.Rater-icon1 {
+  margin-top: 15px;
+  float: right;
+  color: white;
+  font-size: 3em;
+  margin-right: 720px;
+}
+
 .FormFieldHead {
   float: left;
   margin-left: 50px;
@@ -80,9 +96,8 @@ p {
   border-bottom-style: solid;
   border-left-style: solid;
   margin-left: 80px;
-  
+  /* border-right-width: 200px; */
 }
-
 h2 {
   color: white;
   float: left;
@@ -101,6 +116,7 @@ h2 {
 }
 
 .comment_right {
+  /* padding: 30px; */
   float: right;
   height: 200px;
   margin-right: 50px;
@@ -111,7 +127,7 @@ h2 {
 }
 
 .react-rater-star.is-active {
-  color: greenyellow;
+  color: #FFD700;
 }
 
 li {
@@ -125,22 +141,14 @@ li {
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: flex-start;
+  justify-content: space-evenly;
 }
 .rating-section h3 {
   margin: 5px;
 }
-
 .rating-wrapper {
   display: flex;
   flex-direction: row;
   align-items: flex-start;
   justify-content: space-evenly;
-}
-
-.react-rater-star {
-  cursor: pointer;
-  color: #ccc;
-  position: relative;
-  font-size: 2em;
 }

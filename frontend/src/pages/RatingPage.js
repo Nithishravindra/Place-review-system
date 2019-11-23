@@ -54,6 +54,7 @@ class Rating extends Component {
             fetch(`http://localhost:3000/comment/add`, {
 					method: "POST",
 					 body: JSON.stringify({
+                        placeId: placeId, //(should be taken from props)
                         userID: cUserID,
                         COMMENT: this.state.userComment,
                         userRating: this.state.userRating
@@ -81,7 +82,7 @@ class Rating extends Component {
 
     handleRate(e){
         const TOTAL_RATING = e.rating;
-        console.log('lololol',TOTAL_RATING)
+        //console.log('ratingggg => ',TOTAL_RATING)
         this.setState({
             userRating: TOTAL_RATING
         })
@@ -94,17 +95,47 @@ class Rating extends Component {
         console.log(this.state)
     }
 
+    // componentDidMount(){
+    //     fetch(`http://localhost:3000/places/${place_title}`, {
+	// 				method: "GET",
+	// 				headers: {
+	// 					"Content-type": "application/json",
+	// 					Accept: "application/json"
+	// 				}
+	// 			})	
+	// 			.then(res => res.json())
+	// 			.then(response => {
+	// 				console.log(response)
+					
+	// 		})
+    // 	}	
+    // }
+
+    componentDidMount() {
+        console.log("in component did  mount")
+        fetch(`http://localhost:3000/places/rnsittttt`, {
+            method: "GET",
+            headers: {
+                "Content-type": "application/json",
+                Accept: "application/json" 
+            }
+        })
+        .then(res => res.json())
+        .then(response => {
+            console.log(response)
+        })
+    }
 
     render() {
 
         const { userComment, userRating, errorMessage } = this.state;
         const { dataPassed } = this.props.location || [];
-        const clickedPlace =
-            dataPassed !== undefined
-                ? dataPassed.listOfPlaces.find(
-                        item => item.placeId === dataPassed.placeId
-                  )
-                : [];
+      const clickedPlace = 0;
+        //     dataPassed !== undefined
+        //         ? dataPassed.listOfPlaces.find(
+        //                 item => item.placeId === dataPassed.placeId
+        //           )
+        //         : [];
 
         if (dataPassed === undefined) {
             return <p>No Data!</p>;

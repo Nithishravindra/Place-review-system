@@ -16,35 +16,34 @@ import { Component } from 'react';
 		this.handleChange = this.handleChange.bind(this);
 	}
 	
-	
-		Logout = (e) => {
-			const cUserID = localStorage.getItem('userID');
-			console.log('in feedbackPage ',cUserID)
-			fetch(`http://localhost:3000/users/logout`, {
-					method: "POST",
-					body: JSON.stringify({
-						userID: cUserID
-					}),
-					headers: {
-						"content-type":"application/json",
-						Accept: "application/json"
-					}
-				})
-				.then(res => res.json())
-				.then(response => {
-					console.log(response)
-						if(response.statusCode === 200){
-							localStorage.removeItem('userID')
-							alert(`Thank you!`)
-							this.props.history.push(`/sign-in`)
-						}
-						else {
-							this.setState({
-								errorMessage: "AUTH failed"
-							})
-						}
-				})  
-		 }
+		// Logout = (e) => {
+		// 	const cUserID = localStorage.getItem('userID');
+		// 	console.log('in feedbackPage ',cUserID)
+		// 	fetch(`http://localhost:3000/users/logout`, {
+		// 			method: "POST",
+		// 			body: JSON.stringify({
+		// 				userID: cUserID
+		// 			}),
+		// 			headers: {
+		// 				"content-type":"application/json",
+		// 				Accept: "application/json"
+		// 			}
+		// 		})
+		// 		.then(res => res.json())
+		// 		.then(response => {
+		// 			console.log(response)
+		// 				if(response.statusCode === 200){
+		// 					localStorage.removeItem('userID')
+		// 					alert(`Thank you!`)
+		// 					this.props.history.push(`/sign-in`)
+		// 				}
+		// 				else {
+		// 					this.setState({
+		// 						errorMessage: "AUTH failed"
+		// 					})
+		// 				}
+		// 		})  
+		//  }
 	
 
 	handleChange(e) {
@@ -58,19 +57,19 @@ import { Component } from 'react';
 		console.log('display of feedback',feedback, radio1)
 		if(feedback.length>0){
 			const cUserID = localStorage.getItem('userID');
-		console.log( 'handle submit => ',feedback, radio1, cUserID)
-	 	fetch(`http://localhost:3000/feedback/add`, {
-					method: "POST",
-					body: JSON.stringify({
-						feedback: this.state.feedback,
-						radio: this.state.radio1,
-						userID: cUserID
-					}),
-					headers: {
-						"Content-type": "application/json",
-						Accept: "application/json"
-					}
-				})
+			console.log( 'handle submit => ',feedback, radio1, cUserID)
+	 		fetch(`http://localhost:3000/feedback/add`, {
+				method: "POST",
+				body: JSON.stringify({
+				feedback: this.state.feedback,
+				radio: this.state.radio1,
+				userID: cUserID
+			}),
+				headers: {
+				"Content-type": "application/json",
+				Accept: "application/json"
+			}
+		})
 		.then(res => res.json())
 		.then(response => {
 				console.log(response);

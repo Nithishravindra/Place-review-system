@@ -4,14 +4,14 @@ const mysqlConnection = require('../connection');
 const sgMail = require('@sendgrid/mail');
 sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
-
 const cookieParser = require('cookie-parser')
 Router.use(cookieParser());
 
 
 // to get all USERS
 Router.get("/", (req, res) => {
-    mysqlConnection.query('SELECT * FROM users', (error, rows, fields) => {
+    mysqlConnection.query(
+        'SELECT * FROM users', (error, rows, fields) => {
         if(!error){
             res.send(rows);
         } else {
@@ -22,7 +22,8 @@ Router.get("/", (req, res) => {
 
 // to get individual USER by USER_ID
 Router.get("/:id", (req, res) => {
-    mysqlConnection.query('SELECT * FROM users WHERE user_id = ? ',[req.params.id] ,(error, rows, fields) => {
+    mysqlConnection.query(
+        'SELECT * FROM users WHERE user_id = ? ',[req.params.id] ,(error, rows, fields) => {
         if(!error){
             res.send(rows);
         } else {
@@ -46,9 +47,9 @@ Router.delete("/delete/:id", (req, res) => {
 Router.post("/add", (req, res) => {
     
     let usr  = req.body;
-    let sqll = ' INSERT INTO users (name, email, password, phno) VALUES ' + '(' +   "'" + usr.name + "'" + ',' + "'" + usr.email + "'"  + ',' + "'" + usr.password  +"'" + ',' +  usr.phno +')';
-    console.log(sqll);
-    mysqlConnection.query(sqll,(error, rows, fields, next) => {
+    let sql = 'INSERT INTO users(name, email, password, phno) VALUES (?,?,?,?)'
+    mysqlConnection.query(
+        sql,[usr.name, usr.email, usr.password, usr.phno],(error, rows, fields, next) => {
         if(!error) {
                const msg = {
                 to: "nithishravindra8@gmail.com",
@@ -77,21 +78,22 @@ Router.post("/add", (req, res) => {
 // to UPDATE an existing user 
 Router.put("/update", (req, res) => {
     let usr  = req.body;
-    var sqll = ' SET @USER_ID = ?; SET @NAME = ?; SET @EMAIL = ?; SET @PASSWORD = ?; SET @PHNO = ? ;\
+    let sqll = ' SET @USER_ID = ?; SET @NAME = ?; SET @EMAIL = ?; SET @PASSWORD = ?; SET @PHNO = ? ;\
     CALL UserAddOrEdit(@USER_ID, @NAME, @EMAIL, @PASSWORD, @PHNO);';
-    console.log(usr, sqll);
-    mysqlConnection.query(sqll, [usr.USER_ID, usr.NAME, usr.EMAIL, usr.PASSWORD, usr.PHNO],(error, results, fields) => {
+    mysqlConnection.query(
+        sqll, [usr.USER_ID, usr.NAME, usr.EMAIL, usr.PASSWORD, usr.PHNO],(error, results, fields) => {
         if(!error){
-            res.send('updated successfully');
+            res.status(200).send('Updated successfully');
         } else {
-            console.log(error);
+            res.status(401).send('Unsuccessful')
         }
     })
 })
 
+
+
 Router.post('/login', function(req, res) {
-    
-    const { email, password } = req.body;
+    let { email, password } = req.body;
     if (email && password) {
       mysqlConnection.query(
         'SELECT * FROM users WHERE email = ? AND password = ?',
