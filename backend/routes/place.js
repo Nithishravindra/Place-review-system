@@ -36,15 +36,9 @@ Router.post("/add", (req, res) => {
             if (!error) {
                 let addPlaceID = rows.insertId;
                 console.log('placeID = ', addPlaceID)
-                mysqlConnection.query('INSERT INTO rating (average_rating, place_id) VALUES (0,?)', [addPlaceID], (error, rows, fileds) => {
-                    if (!error) {
-                        res.status(200).send({ 'statusCode': 200, 'Message': usr.userID })
-                    } else {
-                        console.error(error)
-                    }
-                })
+                res.status(200).send({ 'statusCode': 200, 'message': usr.userID })
             } else {
-                res.status(401).send({ 'statusCode': 401, message: 'Place already exists' });
+                res.status(401).send({ 'statusCode': 401, 'message': 'Place already exists' });
             }
         })
 });
@@ -66,7 +60,7 @@ Router.put("/update", (req, res) => {
 
 
 Router.get("/listofplaces", (req, res) => {
-    let query = 'SELECT place_id, place_title  FROM places';
+    let query = 'SELECT place_id, place_title, place_description FROM places';
     mysqlConnection.query(query, (error, rows, fields) => {
         if (error) {
             res.status(400).send("Error")

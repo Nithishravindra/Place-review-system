@@ -11,134 +11,135 @@ class App extends Component {
 			placeTitle: "",
 			description: "",
 			errorMessage: "",
-			
+			placeList: "",
 			// listOfplaces ---> API
-			listOfPlaces: [
-				{
-                    placeId: 1,
-                    title: "GandiBazaar",
-                    description: "Kadle KAi Pareshe",
-                    averageRating: 3,
-                    comments: [
-                        {
-							id: 1,
-							userName: "Rashmi AP",
-                            commentText: "Wow enjoyed this place"
-                        },
-                        {
-							id: 2,
-							userName: "Suman",
-                            commentText: "Too good !Wow enjoyed this place"
-                        },
-                        {
-							id: 3,
-							userName: "abcd",
-                            commentText: "Wow enjoyed this place"
-                        },
-                        {
-							id: 4,
-							userName: "bcde",
-                            commentText: "Too good !Wow enjoyed this place"
-                        }
-                    ]
-                },
-				{
-					placeId: 2,
-					title: 'Jayanagar',
-					description: 'As a newbie in React world, I came across a similar issues where I could not edit the textarea and struggled',
-					averageRating: 3,
-                    comments: [
-                        {
-							id: 1,
-							userName: "abcd",
-                            commentText: "Wow enjoyed this place"
-                        },
-                        {
-							id: 2,
-							userName: "qwee",
-                            commentText: "Too good !Wow enjoyed this place"
-                        },
-                        {
-							id: 3,
-							userName: "llopz",
-                            commentText: "Wow enjoyed this place"
-                        },
-                        {
-							id: 4,
-							userName: "samm",
-                            commentText: "Too good !Wow enjoyed this place"
-                        }
-                    ]
-				},
-				{
-					placeId: 3,
-					title: 'Kolar',
-					description: 'My native',
-					averageRating: 3,
-                    comments: [
-                        {
-							id: 1,
-							userName: "sdaf",
-                            commentText: "Wow enjoyed this place"
-                        },
-                        {
-							id: 2,
-							userName: "Rpoq",
-                            commentText: "Too good !Wow enjoyed this place"
-                        },
-                        {
-							id: 3,
-							userName: "raaak",
-                            commentText: "Wow enjoyed this place"
-                        },
-                        {
-							id: 4,
-							userName: "afsd",
-                            commentText: "Too good !Wow enjoyed this place"
-                        }
-                    ]
-				},
-				{
-					placeId: 4,
-					title: 'Taj_mahal',
-					description: 'The Taj Mahal is located on the right bank of the Yamuna River in a vast Mughal garden that encompasses nearly 17 hectares, in the Agra District in Uttar Pradesh. It was built by Mughal Emperor Shah Jahan in memory of his wife Mumtaz Mahal with construction starting in 1632 AD and completed in 1648 AD, with the mosque, the guest house and the main gateway on the south, the outer courtyard and its cloisters were added subsequently and completed in 1653 AD. The existence of several historical and Quaranic inscriptions in Arabic script have facilitated setting the chronology of Taj Mahal.',
-					averageRating: 5,
-                    comments: [
-                        {
-							id: 1,
-							userName: "Rashmi AP",
-                            commentText: "Wow enjoyed this place"
-                        },
-                        {
-							id: 2,
-							userName: "Sam",
-                            commentText: "Too good !Wow enjoyed this place"
-                        },
-                        {
-							id: 3,
-							userName: "Rahim",
-                            commentText: "Wow enjoyed this place"
-                        },
-                        {
-							id: 4,
-							userName: "Raam",
-                            commentText: "Too good !Wow enjoyed this place"
-						},
-						{
-							id: 5,
-							userName: "Dev",
-                            commentText: "Wow enjoyed this place"
-                        },
-                        {
-							id: 6,
-							userName: "Samm",
-                            commentText: "Too good !Wow enjoyed this place"
-                        }
-					]
+			// listOfPlaces: [
+			// 	{
+            //         placeId: 1,
+            //         title: "GandiBazaar",
+            //         description: "Kadle KAi Pareshe",
+            //         averageRating: 3,
+            //         comments: [
+            //             {
+			// 				id: 1,
+			// 				userName: "Rashmi AP",
+            //                 commentText: "Wow enjoyed this place"
+            //             },
+            //             {
+			// 				id: 2,
+			// 				userName: "Suman",
+            //                 commentText: "Too good !Wow enjoyed this place"
+            //             },
+            //             {
+			// 				id: 3,
+			// 				userName: "abcd",
+            //                 commentText: "Wow enjoyed this place"
+            //             },
+            //             {
+			// 				id: 4,
+			// 				userName: "bcde",
+            //                 commentText: "Too good !Wow enjoyed this place"
+            //             }
+            //         ]
+            //     },
+			// 	{
+			// 		placeId: 2,
+			// 		title: 'Jayanagar',
+			// 		description: 'As a newbie in React world, I came across a similar issues where I could not edit the textarea and struggled',
+			// 		averageRating: 3,
+            //         comments: [
+            //             {
+			// 				id: 1,
+			// 				userName: "abcd",
+            //                 commentText: "Wow enjoyed this place"
+            //             },
+            //             {
+			// 				id: 2,
+			// 				userName: "qwee",
+            //                 commentText: "Too good !Wow enjoyed this place"
+            //             },
+            //             {
+			// 				id: 3,
+			// 				userName: "llopz",
+            //                 commentText: "Wow enjoyed this place"
+            //             },
+            //             {
+			// 				id: 4,
+			// 				userName: "samm",
+            //                 commentText: "Too good !Wow enjoyed this place"
+            //             }
+            //         ]
+			// 	},
+			// 	{
+			// 		placeId: 3,
+			// 		title: 'Kolar',
+			// 		description: 'My native',
+			// 		averageRating: 3,
+            //         comments: [
+            //             {
+			// 				id: 1,
+			// 				userName: "sdaf",
+            //                 commentText: "Wow enjoyed this place"
+            //             },
+            //             {
+			// 				id: 2,
+			// 				userName: "Rpoq",
+            //                 commentText: "Too good !Wow enjoyed this place"
+            //             },
+            //             {
+			// 				id: 3,
+			// 				userName: "raaak",
+            //                 commentText: "Wow enjoyed this place"
+            //             },
+            //             {
+			// 				id: 4,
+			// 				userName: "afsd",
+            //                 commentText: "Too good !Wow enjoyed this place"
+            //             }
+            //         ]
+			// 	},
+			// 	{
+			// 		placeId: 4,
+			// 		title: 'Taj_mahal',
+			// 		description: 'The Taj Mahal is located on the right bank of the Yamuna River in a vast Mughal garden that encompasses nearly 17 hectares, in the Agra District in Uttar Pradesh. It was built by Mughal Emperor Shah Jahan in memory of his wife Mumtaz Mahal with construction starting in 1632 AD and completed in 1648 AD, with the mosque, the guest house and the main gateway on the south, the outer courtyard and its cloisters were added subsequently and completed in 1653 AD. The existence of several historical and Quaranic inscriptions in Arabic script have facilitated setting the chronology of Taj Mahal.',
+			// 		averageRating: 5,
+            //         comments: [
+            //             {
+			// 				id: 1,
+			// 				userName: "Rashmi AP",
+            //                 commentText: "Wow enjoyed this place"
+            //             },
+            //             {
+			// 				id: 2,
+			// 				userName: "Sam",
+            //                 commentText: "Too good !Wow enjoyed this place"
+            //             },
+            //             {
+			// 				id: 3,
+			// 				userName: "Rahim",
+            //                 commentText: "Wow enjoyed this place"
+            //             },
+            //             {
+			// 				id: 4,
+			// 				userName: "Raam",
+            //                 commentText: "Too good !Wow enjoyed this place"
+			// 			},
+			// 			{
+			// 				id: 5,
+			// 				userName: "Dev",
+            //                 commentText: "Wow enjoyed this place"
+            //             },
+            //             {
+			// 				id: 6,
+			// 				userName: "Samm",
+            //                 commentText: "Too good !Wow enjoyed this place"
+            //             }
+			// 		]
 					
-				}
-			],
+			// 	}
+			// ],
 			totalRating: 5,
+			listOfPlaces: [],
 			dummyData: []
 			
 		};
@@ -202,15 +203,12 @@ class App extends Component {
 				})	
 				.then(res => res.json())
 				.then(response => {
-					console.log(response)
-					this.setState(
-						previousState => ({
-							listOfPlaces: [...previousState.listOfPlaces, { title: this.state.title, description: this.state.description}]
-						})
-				)
-			})
-		}	
-
+					 console.log(response)
+				this.setState({
+					listOfPlaces: response
+				})
+		})
+	}
 
 	render() {
 		const { placeTitle, description, listOfPlaces, errorMessage } = this.state;
@@ -223,17 +221,18 @@ class App extends Component {
 				</div>
 
 				
-				<div className="FormFieldB">
+				  <div className="FormFieldB">
 					<div className="FormTitle">
+
                        	 {listOfPlaces.map((item, index) => (
+
                          	   <Link
                             	    to={{
                                     	pathname: `/ratingPage/${item.title}`,
 	                                	dataPassed: {
-											//listOfPlaces: listOfPlaces,
 											placeTitle : placeTitle,
+											description: description,
 											placeId: item.placeId,
-											totalRating: this.state.totalRating,
                                         	addNewComment: (
 												userComment,
 												placeId
@@ -247,13 +246,13 @@ class App extends Component {
                                 	}}
 									key={index}
 									className="FormTitle_Ln">
-                                	{item.title}
+                                	{item.place_title}
                             </Link>
                         ))}
                     </div>
 					
-					<form onSubmit={this.handleSubmit}>
-						<h5>To add a new place in the list add title and description in below textbox and click on 'SUBMIT'</h5>
+					<form onSubmit = {this.handleSubmit}>
+						<h5>To add a new place in the list, add title and description in below textbox and click on 'SUBMIT' button.</h5>
 							
 						<div className="FormFieldT">
 							<input type="text" 

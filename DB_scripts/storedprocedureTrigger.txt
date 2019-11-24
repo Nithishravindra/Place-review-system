@@ -37,3 +37,16 @@ BEGIN
     WHERE PLACE_ID = _PLACE_ID;
     SELECT _PLACE_ID AS 'PLACE_ID';
 END
+
+
+-- TRIGGER -- 
+delimiter 
+$$
+    create trigger forAvg
+    after insert on places 
+    for each row 
+    begin 
+	    insert into rating (average_rating,place_id) values (0, new.place_id);
+    end;
+$$
+DELIMITER ;
