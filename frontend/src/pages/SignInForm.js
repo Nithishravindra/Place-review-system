@@ -12,7 +12,7 @@ class SignInForm extends Component {
       errorMessage: ''
     };
     this.handleChange = this.handleChange.bind(this);
-   // this.handleSubmit = this.handleSubmit.bind(this);
+    // this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   handleChange(e) {
@@ -23,32 +23,32 @@ class SignInForm extends Component {
 
   handleSubmit(e, email, password) {
     e.preventDefault();
-    
-    if(email.length > 0 && password.length > 0){
+
+    if (email.length > 0 && password.length > 0) {
       fetch(`http://localhost:3000/users/login`, {
-					method: "POST",
-					 body: JSON.stringify({
-						email: this.state.email,
-						password: this.state.password
-					}),
-					headers: {
-						"Content-type": "application/json",
-						Accept: "application/json"
-					}
-				})
+        method: "POST",
+        body: JSON.stringify({
+          email: this.state.email,
+          password: this.state.password
+        }),
+        headers: {
+          "Content-type": "application/json",
+          Accept: "application/json"
+        }
+      })
         .then(res => res.json())
-				.then(response => {
-						if(response.statusCode === 200){
-              localStorage.setItem('userID', response.Message)    
-              this.props.history.push(`/welcomePage`)
-            }
-            if(response.statusCode === 401){
-              this.setState({
-                errorMessage: "Invalid Details"
-              })
-            }
-          })
-                 
+        .then(response => {
+          if (response.statusCode === 200) {
+            localStorage.setItem('userID', response.Message)
+            this.props.history.push(`/welcomePage`)
+          }
+          if (response.statusCode === 401) {
+            this.setState({
+              errorMessage: "Invalid Details"
+            })
+          }
+        })
+
     } else {
       this.setState({
         errorMessage: "Please enter email/password"
@@ -60,50 +60,50 @@ class SignInForm extends Component {
   componentDidMount() {
     document.title = 'PRS log in or sign up';
   }
- 
-  
+
+
   render() {
-    const {email, password, errorMessage} = this.state;
-   
+    const { email, password, errorMessage } = this.state;
+
 
     return (
       <div className="FormCenter">
         {this.componentDidMount()}
         <div className="App-header"><h1>Place Review System</h1></div>
 
-            <div className="FormTitle">
-              <Link to="/sign-in" className="FormTitle__Link">LOGIN </Link>  or
+        <div className="FormTitle">
+          <Link to="/sign-in" className="FormTitle__Link">LOGIN </Link>  or
               <Link to="/sign-up" className="FormTitle__Link"> REGISTER </Link>
-            </div>
-            
-            <div className="PageSwitcher">
-              <NavLink to="/sign-in" activeClassName="PageSwitcher__Item--Active" className="PageSwitcher__Item">LOGIN</NavLink>
-              <NavLink to="/sign-up" activeClassName="PageSwitcher__Item--Active" className="PageSwitcher__Item">REGISTER</NavLink>
-            </div>
+        </div>
 
-          <form onSubmit={this.handleSubmit} className="FormFields">
-            
-              <div className="FormField">
-                <label className="FormField__Label" htmlFor="email">Email Address</label>
-                <input type="email" id="email" className="FormField__Input" placeholder="Enter your Email" name="email" value={this.state.email} onChange={this.handleChange} />
-              </div>
+        <div className="PageSwitcher">
+          <NavLink to="/sign-in" activeClassName="PageSwitcher__Item--Active" className="PageSwitcher__Item">LOGIN</NavLink>
+          <NavLink to="/sign-up" activeClassName="PageSwitcher__Item--Active" className="PageSwitcher__Item">REGISTER</NavLink>
+        </div>
 
-              <div className="FormField">
-                <label className="FormField__Label" htmlFor="password">Password</label>
-                <input type="password" id="password" className="FormField__Input" placeholder="Enter your password" name="password" value={this.state.password} onChange={this.handleChange} />
-              </div>
+        <form onSubmit={this.handleSubmit} className="FormFields">
 
-              <div className="FormField">
-               
-                  <h2 style={{margin: 30}}> {errorMessage}</h2>
-                  <button onClick={ e => this.handleSubmit(e, email, password)} className="FormField__Button mr-20"> LOGIN</button> 
-                  <Link to="/welcomePage"></Link>
-                
-                <Link to="/sign-up" className="FormField__Link">Create an account</Link>
-              </div>
-          
-              <Route exact path="/welcomePage" component={WelcomePage} />
-        
+          <div className="FormField">
+            <label className="FormField__Label" htmlFor="email">Email Address</label>
+            <input type="email" id="email" className="FormField__Input" placeholder="Enter your Email" name="email" value={this.state.email} onChange={this.handleChange} />
+          </div>
+
+          <div className="FormField">
+            <label className="FormField__Label" htmlFor="password">Password</label>
+            <input type="password" id="password" className="FormField__Input" placeholder="Enter your password" name="password" value={this.state.password} onChange={this.handleChange} />
+          </div>
+
+          <div className="FormField">
+
+            <h2 style={{ margin: 30 }}> {errorMessage}</h2>
+            <button onClick={e => this.handleSubmit(e, email, password)} className="FormField__Button mr-20"> LOGIN</button>
+            <Link to="/welcomePage"></Link>
+
+            <Link to="/sign-up" className="FormField__Link">Create an account</Link>
+          </div>
+
+          <Route exact path="/welcomePage" component={WelcomePage} />
+
         </form>
       </div>
     );

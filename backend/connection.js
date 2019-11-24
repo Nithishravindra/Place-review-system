@@ -1,6 +1,7 @@
 const mysql = require('mysql');
 
-var connection = mysql.createConnection({
+//connection to db
+let connection = mysql.createConnection({
     host: 'localhost',
     user: 'root',
     password: 'password',
@@ -8,11 +9,10 @@ var connection = mysql.createConnection({
     multipleStatements: true
 });
 
-connection.connect(function(error) {
-    if(error) 
-    {
-        console.log( 'error connectiong to db ' + JSON.stringify(error, undefined, 2));
-    } else  {
+connection.connect(function (error) {
+    if (error) {
+        console.log('error connectiong to db ' + JSON.stringify(error, undefined, 2));
+    } else {
         console.log('Connected');
     }
 });

@@ -58,7 +58,7 @@ Router.put("/update", (req, res) => {
     })
 });
 
-
+//listOfPlaces 
 Router.get("/listofplaces", (req, res) => {
     let query = 'SELECT place_id, place_title, place_description FROM places';
     mysqlConnection.query(query, (error, rows, fields) => {
@@ -70,6 +70,7 @@ Router.get("/listofplaces", (req, res) => {
         }
     })
 });
+
 
 Router.get("/:placename", (req, res) => {
     let placeName = req.params.placename;
@@ -93,7 +94,7 @@ Router.get("/:placename", (req, res) => {
                                 if (!error) {
                                     let averageItem = JSON.parse(JSON.stringify(rows[0]));
                                     console.log('averageee', averageItem)
-                                     const newObj = commentList.flat().map(p => Object.assign(p, averageItem));
+                                    const newObj = commentList.flat().map(p => Object.assign(p, averageItem));
                                     // let newObj = Object.assign({}, averageItem, commentList);
                                     console.log('final obj = ', newObj);
                                     res.status(200).send(newObj);

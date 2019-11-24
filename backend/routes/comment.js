@@ -5,7 +5,7 @@ const mysqlConnection = require('../connection');
 // to get all comments
 Router.get("/", (req, res) => {
     mysqlConnection.query('SELECT * FROM comment', (error, rows, fields) => {
-        if(!error){
+        if (!error) {
             res.send(rows);
         } else {
             console.log(error);
@@ -13,32 +13,33 @@ Router.get("/", (req, res) => {
     })
 })
 
-Router.post("/add", (req, res) => { 
+// to insert new place
+Router.post("/add", (req, res) => {
     const placeId = 58;
-   // replace placeID  
+    // replace placeID  
     let usr = req.body;
     console.log(usr.userID)
-    mysqlConnection.query('SELECT name from users where user_id = ?',usr.userID, (error, rows, fields) => {
+    mysqlConnection.query('SELECT name from users where user_id = ?', usr.userID, (error, rows, fields) => {
         let userName = rows[0].name;
         console.log(userName)
-        let params = [usr.COMMENT, userName, usr.userID, placeId, usr.userRating, usr.userID, placeId, placeId,placeId]
-            if(!error){
-                mysqlConnection.query('INSERT INTO comment (comment, name, USERS_USER_ID, place_id) VALUES (?,?,?,?) ;\
+        let params = [usr.COMMENT, userName, usr.userID, placeId, usr.userRating, usr.userID, placeId, placeId, placeId]
+        if (!error) {
+            mysqlConnection.query('INSERT INTO comment (comment, name, USERS_USER_ID, place_id) VALUES (?,?,?,?) ;\
                 INSERT INTO rating_star (TOTAL_RATING, USERS_USER_ID, place_id) values (?, ?, ?); \
                 UPDATE rating \
                 SET average_rating = (SELECT ROUND(AVG(total_rating),0) FROM rating_star WHERE place_id = ?)\
-                WHERE place_id = ?;'  ,params,(error, rows, fields) => {
-                    if(!error){
-                        res.status(200).send('added comment successfully');
-                    } else {
-                        console.error(error);
-                    }
-                })
-            } else {
-                res.status(400).send('Error')
-            }
+                WHERE place_id = ?;'  , params, (error, rows, fields) => {
+                if (!error) {
+                    res.status(200).send('added comment successfully');
+                } else {
+                    console.error(error);
+                }
+            })
+        } else {
+            res.status(400).send('Error')
+        }
     })
-   
+
 })
 
 module.exports = Router;
