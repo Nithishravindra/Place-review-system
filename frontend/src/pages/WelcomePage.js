@@ -11,10 +11,7 @@ class App extends Component {
 			placeTitle: "",
 			description: "",
 			errorMessage: "",
-			placeList: "",
-			totalRating: 5,
-			listOfPlaces: [],
-			dummyData: []
+			listOfPlaces: []
 
 		};
 		this.handleChange = this.handleChange.bind(this);
@@ -54,10 +51,6 @@ class App extends Component {
 					}
 				})
 
-			this.setState(
-				previousState => ({
-					listOfPlaces: [...previousState.listOfPlaces, { title: this.state.placeTitle, description: this.state.description }]
-				}));
 		} else {
 			this.setState({
 				errorMessage: "Please fill fields"
@@ -77,7 +70,7 @@ class App extends Component {
 		})
 			.then(res => res.json())
 			.then(response => {
-				console.log(response)
+				//console.log(response)
 				this.setState({
 					listOfPlaces: response
 				})
@@ -98,25 +91,10 @@ class App extends Component {
 				<div className="FormFieldB">
 					<div className="FormTitle">
 
-						{listOfPlaces.map((item, index) => (
-
+						{listOfPlaces.map((item, index) => (	
 							<Link
 								to={{
-									pathname: `/ratingPage/${item.title}`,
-									dataPassed: {
-										placeTitle: placeTitle,
-										description: description,
-										placeId: item.placeId,
-										addNewComment: (
-											userComment,
-											placeId
-										) => {
-											this.addNewUserComment(
-												placeId,
-												userComment
-											);
-										}
-									}
+									pathname: `/ratingPage/${item.place_title}`,
 								}}
 								key={index}
 								className="FormTitle_Ln">

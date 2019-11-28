@@ -12,43 +12,19 @@ class Rating extends Component {
             userID: "",
             userComment: "",
             userRating: "",
-            errorMessage: ""
+            errorMessage: "",
+            responseFromApi: "",
+            isLoading: false,
+            responseAvg: "",
+            placeId: ""
         };
         this.handleChange = this.handleChange.bind(this);
         this.handleRate = this.handleRate.bind(this)
     }
 
-    Logout = (e) => {
-        const cUserID = localStorage.getItem('userID');
-        fetch(`http://localhost:3000/users/logout`, {
-            method: "POST",
-            body: JSON.stringify({
-                userID: cUserID
-            }),
-            headers: {
-                "content-type": "application/json",
-                Accept: "application/json"
-            }
-        })
-            .then(res => res.json())
-            .then(response => {
-                console.log(response)
-                if (response.statusCode === 200) {
-                    localStorage.removeItem('userID')
-                    alert(`Thank you!`)
-                    this.props.history.push(`/sign-in`)
-                }
-                else {
-                    this.setState({
-                        errorMessage: "AUTH failed"
-                    })
-                }
-            })
-    }
 
-
-    addNewComment = (placeId, e) => {
-        e.preventDefault();
+    addNewComment = (placeId, userComment, userRating) => {
+        console.log('placeid in addnewcomment == ', placeId, userComment, userRating)
         const cUserID = localStorage.getItem('userID');
         if (this.state.userComment.length > 0) {
             fetch(`http://localhost:3000/comment/add`, {
@@ -56,8 +32,8 @@ class Rating extends Component {
                 body: JSON.stringify({
                     userID: cUserID,
                     COMMENT: this.state.userComment,
-                    userRating: this.state.userRating
-
+                    userRating: this.state.userRating,
+                    placeId: placeId
                 }),
                 headers: {
                     "Content-type": "application/json",
@@ -65,7 +41,7 @@ class Rating extends Component {
                 }
             })
                 .then(res => {
-                    console.log('hey token ', res)
+                    res.json()
                 })
                 .then(data => {
                     console.log(data)
@@ -94,47 +70,72 @@ class Rating extends Component {
         console.log(this.state)
     }
 
+    componentDidMount() {
+
+        let title = this.props.match.params.placeName
+        fetch(`http://localhost:3000/places/${title}`, {
+            method: "GET",
+            headers: {
+                "Content-type": "application/json",
+                Accept: "application/json"
+            }
+        })
+            .then(res => res.json())
+            .then(response => {
+                console.log(response)
+                this.setState({
+                    resPlace: response.placeItem,
+                    responseAvg: response.averageItem,
+                    responseComment: response.commentList,
+                    isLoading: false
+                })
+                console.log("Api response ", response.averageItem)
+
+            })
+
+        //if(responseAvg.average_rating === 0 ) {
+        //     this.setState({
+        //         errorMessage: "Be the first to comment and rate"
+        //     })
+        //    }
+    }
 
     render() {
 
-        const { userComment, userRating, errorMessage } = this.state;
-        const { dataPassed } = this.props.location || [];
-        const clickedPlace =
-            dataPassed !== undefined
-                ? dataPassed.listOfPlaces.find(
-                    item => item.placeId === dataPassed.placeId
-                )
-                : [];
+        const { userComment, userRating, errorMessage, resPlace, responseAvg, responseComment } = this.state;
 
-        if (dataPassed === undefined) {
+
+        if (resPlace === undefined) {
             return <p>No Data!</p>;
         }
 
         return (
             <div className="Appp">
                 <div className="FormFieldA">
-                    <h1>{clickedPlace.title}</h1>
-                </div>
 
-                <div className="holder">
-                    <p>{clickedPlace.description}</p>
+                    {resPlace.map((item, index) => (
+                        <div key={index}>
+                            <h1>{item.place_title}</h1>
+                        </div>
+                    ))}
+
+                    {resPlace.map((item, index) => (
+                        <div key={index} class="holder">
+                            <p>{item.place_description}</p>
+                        </div>
+                    ))}
                 </div>
 
                 <div className="rating-wrapper">
-                    <div className="rating-section">
+                    <div className="">
+                        <div className="">
                         <h3>Average Rating</h3>
-                        <Rater rating={clickedPlace.averageRating} />
-                    </div>
-
-                    <div className="rating-section">
+                        <Rater rating={responseAvg.average_rating} />
                         <h3>Your Rating</h3>
                         <Rater
                             rating={userRating}
                             onRate={this.handleRate} name="userRating" />
-                    </div>
 
-                    <div className="FormFieldQ">
-                        <div className="FormFieldA">
                             <textarea
                                 type="text"
                                 placeholder="Enter your comment"
@@ -142,27 +143,28 @@ class Rating extends Component {
                                 name="userComment"
                                 onChange={this.handleChange}
                             />
-                            <h2 style={{ color: "red", margin: 50 }}>{errorMessage} </h2>
+                            <h2 style={{ color: "white", margin: 50 }}>{errorMessage} </h2>
                         </div>
+
                         <div className="FormFieldA">
                             <button
                                 onClick={e =>
-                                    this.addNewComment(clickedPlace.placeId, e, userRating)
+                                    this.addNewComment(resPlace[0].place_id, userComment, userRating)
                                 }
                                 className="Form-Button">
                                 SUBMIT
-                                        </button>
+                                </button>
                         </div>
                     </div>
 
                     <div className="comment_right">
                         <h3>Comments</h3>
-                        {clickedPlace.comments.map(item => (
-                            <div key={item.id}>
+                        {responseComment.map(item => (
+                            <div key={item.comment_id}>
                                 <ul>
-                                    <li>Name:{item.userName}</li>{" "}
+                                    <li>Name:{item.name}</li>{" "}
                                 </ul>
-                                <p>Comment: {item.commentText}</p>
+                                <p>Comment: {item.comment}</p>
                             </div>
                         ))}
 
@@ -188,3 +190,5 @@ class Rating extends Component {
 }
 
 export default Rating;
+
+

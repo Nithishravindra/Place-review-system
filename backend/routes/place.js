@@ -65,7 +65,7 @@ Router.get("/listofplaces", (req, res) => {
         if (error) {
             res.status(400).send("Error")
         } else {
-            console.log('placeItem', rows);
+            //console.log('placeItem', rows);
             res.status(200).send(rows);
         }
     })
@@ -75,7 +75,7 @@ Router.get("/listofplaces", (req, res) => {
 Router.get("/:placename", (req, res) => {
     let placeName = req.params.placename;
     //console.log('placeName == ', placeName);
-    let forPlaceID = 'select place_id from places where place_title = ?';
+    let forPlaceID = 'select place_title, place_id, place_description from places where place_title = ?';
     let commentItem = 'select  c.comment_id, c.name, c.comment from comment c where place_id = ?';
     let average = 'select average_rating from rating where place_id = ?'
     mysqlConnection.query(forPlaceID, placeName, (error, rows, fields) => {
@@ -83,9 +83,9 @@ Router.get("/:placename", (req, res) => {
             console.error(error);
             res.status(400).send("Error");
         } else {
-            if (rows.length > 0) {
+            if (rows.length > 0) {  
                 let placeID = rows[0].place_id;
-                console.log('placeID => ', rows[0].place_id);
+                let placeItem =  JSON.parse(JSON.stringify(rows));
                 mysqlConnection.query(commentItem, placeID, (error, rows) => {
                     if (!error) {
                         if (rows.length > 0) {
@@ -93,17 +93,15 @@ Router.get("/:placename", (req, res) => {
                             mysqlConnection.query(average, placeID, (error, rows) => {
                                 if (!error) {
                                     let averageItem = JSON.parse(JSON.stringify(rows[0]));
-                                    console.log('averageee', averageItem)
-                                    const newObj = commentList.flat().map(p => Object.assign(p, averageItem));
-                                    // let newObj = Object.assign({}, averageItem, commentList);
-                                    console.log('final obj = ', newObj);
-                                    res.status(200).send(newObj);
+                                    //let newObj = commentList.flat().map(p => Object.assign(p, averageItem, placeItem));
+                                     let newObj = Object.assign( {},{averageItem, commentList, placeItem});
+                                      res.status(200).send(newObj);
                                 } else {
                                     res.status(401).send("failed here")
                                 }
                             })
                         } else {
-                            res.status(200).send({ "average_rating": 0 })
+                            res.status(200).send({ "average_rating": 0, "comments": "null" })
                         }
                     } else {
                         console.error(error);
