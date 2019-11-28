@@ -12,7 +12,6 @@ class SignInForm extends Component {
       errorMessage: ''
     };
     this.handleChange = this.handleChange.bind(this);
-    // this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   handleChange(e) {
@@ -71,21 +70,16 @@ class SignInForm extends Component {
         {this.componentDidMount()}
         <div className="App-header"><h1>Place Review System</h1></div>
 
-        <div className="FormTitle">
-          <Link to="/sign-in" className="FormTitle__Link">LOGIN </Link>  or
-              <Link to="/sign-up" className="FormTitle__Link"> REGISTER </Link>
-        </div>
-
         <div className="PageSwitcher">
-          <NavLink to="/sign-in" activeClassName="PageSwitcher__Item--Active" className="PageSwitcher__Item">LOGIN</NavLink>
-          <NavLink to="/sign-up" activeClassName="PageSwitcher__Item--Active" className="PageSwitcher__Item">REGISTER</NavLink>
+          <NavLink to="/sign-in" activeClassName="PageSwitcher__Item--Active" className="PageSwitcher__Item">Login</NavLink>
+          <NavLink to="/sign-up" activeClassName="PageSwitcher__Item--Active" className="PageSwitcher__Item">Register</NavLink>
         </div>
 
         <form onSubmit={this.handleSubmit} className="FormFields">
 
           <div className="FormField">
             <label className="FormField__Label" htmlFor="email">Email Address</label>
-            <input type="email" id="email" className="FormField__Input" placeholder="Enter your Email" name="email" value={this.state.email} onChange={this.handleChange} />
+            <input type="email" id="email" className="FormField__Input" placeholder="Enter your email" name="email" value={this.state.email} onChange={this.handleChange} />
           </div>
 
           <div className="FormField">
@@ -96,10 +90,14 @@ class SignInForm extends Component {
           <div className="FormField">
 
             <h2 style={{ margin: 30 }}> {errorMessage}</h2>
-            <button onClick={e => this.handleSubmit(e, email, password)} className="FormField__Button mr-20"> LOGIN</button>
+            <button onClick={e => this.handleSubmit(e, email, password)} className="FormField__Button mr-20"> Login</button>
             <Link to="/welcomePage"></Link>
-
-            <Link to="/sign-up" className="FormField__Link">Create an account</Link>
+            <p3> < br/>  < br /> Create an account</p3>
+            
+            <Link to="/sign-up" className="FormTitle__Link"> 
+              <button  className="FormButtton"> Register</button>
+            </Link> 
+             
           </div>
 
           <Route exact path="/welcomePage" component={WelcomePage} />

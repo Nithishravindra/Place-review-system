@@ -75,26 +75,19 @@ class SignUpForm extends Component {
 
 		return (
 			<div className="FormCenter">
-				{/* //{this.componentDidMount()} */}
-
 				<div className="App-header">
 					<h1>Place Review System</h1>
-				</div>
-
-				<div className="FormTitle">
-					<Link to="/sign-in" className="FormTitle__Link">LOGIN </Link>  or
-                    <Link to="/sign-up" className="FormTitle__Link"> REGISTER</Link>
 				</div>
 
 				<div className="PageSwitcher">
 					<NavLink to="/sign-in"
 						activeClassName="PageSwitcher__Item--Active"
-						className="PageSwitcher__Item">LOGIN
+						className="PageSwitcher__Item">Login
 					</NavLink>
 
 					<NavLink to="/sign-up"
 						activeClassName="PageSwitcher__Item--Active"
-						className="PageSwitcher__Item">REGISTER
+						className="PageSwitcher__Item">Register
 					</NavLink>
 				</div>
 
@@ -116,7 +109,7 @@ class SignUpForm extends Component {
 						<input type="email"
 							id="email"
 							className="FormField__Input"
-							placeholder="Enter your Email"
+							placeholder="Enter your email"
 							name="email"
 							value={email}
 							onChange={this.handleChange} />
@@ -145,12 +138,12 @@ class SignUpForm extends Component {
 					</div>
 
 					<div className="FormField">
-						<label className="FormField__Label" htmlFor="phno">Phone no</label>
-						<input type="number"
+						<label className="FormField__Label" htmlFor="phno">Phone Number</label>
+						<input 
 							pattern="[0-9]*"
 							id="number"
 							className="FormField__Input"
-							placeholder="Enter your phone no"
+							placeholder="Enter your phone number"
 							name="phno"
 							value={phno}
 							onChange={this.handleChange} />
@@ -163,10 +156,11 @@ class SignUpForm extends Component {
 							</h2>
 							<button
 								onClick={e => this.newUser(e, name, email, password, conpassword, phno)}
-								className="FormField__Button mr-20"> REGISTER
+								className="FormBtn"> Register
 							</button>
+							
 						</Link>
-
+							
 					</div>
 
 					<Route excat path="/welcomePage" component={WelcomePage} />

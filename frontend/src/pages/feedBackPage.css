@@ -1,15 +1,18 @@
 .radio_button {
      margin-left: 50px ;
+     /* margin-bottom: 300px; */
+     font-size: 25px;
+     color: white;
 }
 .radio_button1 {
      margin-left: 50px ;
+     margin-bottom: 50px;
 }
 input {
      border: 1px solid white;
-    
  }
 
- h2{
+ h2 {
       color: white;
  }
 
@@ -17,5 +20,19 @@ input {
      display: flex;
      flex-direction: row;
      align-items: flex-start;
-     
  }
+
+ .buttonLogout {
+     margin-top: -600px;
+     margin-left: 900px;
+ }
+ 
+ .A {
+      margin-top: 350px;
+ }
+
+ .label {
+      size: 20px
+ }
+
+ 

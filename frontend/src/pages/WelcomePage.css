@@ -1,23 +1,24 @@
 
-  h4{
-    color: white;
+  h4 {
+    color: antiquewhite;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     font-size: 45px;
     font-weight: bold;
     text-align:  left;  
-    margin-left: 40px;
+    margin-left: 35px;
   }
 
   h5 {
-    color: white;
+    color: darkgrey;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     font-size: 25px;
-    font-weight: bold;
     text-align:  left;  
-    margin-left: 40px;
+    margin-left: 40px; 
+    margin-top: 80px;
   }
 
-  p{
+
+  p {
     font-family: 'Times New Roman', Times, serif;
     color: white;
     font-size: 25px;
@@ -31,24 +32,33 @@
     padding: 25px 40px;
     overflow: auto;
   }
-  
-  .FormFieldB {
-    margin-bottom: 30px;
+
+  .PlaceTitle {
+    color: white;
+    font-weight:bold ;
   }
   
+   .FormFieldB {
+    margin-left: 40px; 
+    margin-top: 25px
+   
+  } 
+  
   .Form-Title {
-    color: #707C8B;
-    font-weight: 400;
+    color: whitesmoke;
+     font-weight: bold;
     min-width: 30px;
-    margin-left: -300px; 
+    /* margin-left: -300px; 
+    margin-bottom: 100px; */
   }
   
   input {
     border: 1px solid #000; 
-     padding: 10px; 
+    padding: 10px; 
     font-size: 1.1em; 
-     width: 500px; 
-     font-family: sans-serif;
+    width: 500px; 
+    font-family: sans-serif;
+    margin-top: 20px;
   } 
 
   .FormT_button{
@@ -59,7 +69,8 @@
     font-size: .8em;
     font-weight: 500;
     margin-top: 20px;
-    margin-left: 30px;
+    margin-left: -30px;
+  
   }
   .FormFieldC__Input{
     margin-top: 50px;
@@ -70,6 +81,7 @@
     margin-top: 20px;
     margin-left: 30px;
   }
+
   .FormFieldText {
     margin-right: -50px;
     margin-top: 10px;
@@ -82,15 +94,15 @@
   } 
   .FormCenter{
     margin-bottom: 30px;
-  }
-  .small{
+  } 
+  .small {
     background-color: white;
     color: rgb(12, 11, 11);
     border-radius: 25px;
     padding: 15px 70px;
     font-size: 1em;
-    margin-left: 100px;
-    margin-top: 20px;
+    /* margin-left: 100px; */
+    /* margin-top: 20px; */
   }
 
   .shareholder{
@@ -102,11 +114,10 @@
   }
 
   .FormTitle_Ln {
-    
     color: #66707D;
     text-decoration: none;
     display: inline-block;
-    border-bottom: 1.5px solid #225E62;
+  
     padding-bottom: 5px;
     margin-left: 40px;
   }

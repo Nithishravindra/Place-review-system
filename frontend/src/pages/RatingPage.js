@@ -46,7 +46,7 @@ class Rating extends Component {
                 .then(data => {
                     console.log(data)
                 })
-
+            window.location.reload()
 
         } else {
             this.setState({
@@ -92,72 +92,81 @@ class Rating extends Component {
                 console.log("Api response ", response.averageItem)
 
             })
-
-        //if(responseAvg.average_rating === 0 ) {
-        //     this.setState({
-        //         errorMessage: "Be the first to comment and rate"
-        //     })
-        //    }
     }
 
     render() {
 
         const { userComment, userRating, errorMessage, resPlace, responseAvg, responseComment } = this.state;
-
-
         if (resPlace === undefined) {
             return <p>No Data!</p>;
         }
-
         return (
             <div className="Appp">
                 <div className="FormFieldA">
+                    <div className="left">
+                        {resPlace.map((item, index) => (
+                            <div key={index}>
+                                <h1>{item.place_title}</h1>
+                            </div>
+                        ))}
 
-                    {resPlace.map((item, index) => (
-                        <div key={index}>
-                            <h1>{item.place_title}</h1>
-                        </div>
-                    ))}
-
-                    {resPlace.map((item, index) => (
-                        <div key={index} class="holder">
-                            <p>{item.place_description}</p>
-                        </div>
-                    ))}
-                </div>
-
-                <div className="rating-wrapper">
-                    <div className="">
-                        <div className="">
-                        <h3>Average Rating</h3>
-                        <Rater rating={responseAvg.average_rating} />
-                        <h3>Your Rating</h3>
-                        <Rater
-                            rating={userRating}
-                            onRate={this.handleRate} name="userRating" />
-
-                            <textarea
-                                type="text"
-                                placeholder="Enter your comment"
-                                defaultValue={userComment}
-                                name="userComment"
-                                onChange={this.handleChange}
-                            />
-                            <h2 style={{ color: "white", margin: 50 }}>{errorMessage} </h2>
-                        </div>
-
-                        <div className="FormFieldA">
-                            <button
-                                onClick={e =>
-                                    this.addNewComment(resPlace[0].place_id, userComment, userRating)
-                                }
-                                className="Form-Button">
-                                SUBMIT
-                                </button>
-                        </div>
+                        {resPlace.map((item, index) => (
+                            <div key={index} class="holder">
+                                <p>{item.place_description}</p>
+                            </div>
+                        ))}
                     </div>
 
-                    <div className="comment_right">
+                    <div className="rating-wrapper">
+                        <div className="rating-section"> 
+
+                            <div className="avg_rating">
+                                <h3>Average Rating
+                                    <span>
+                                    <Rater rating={responseAvg.average_rating} />
+                                    </span>
+                                </h3>
+                            </div>
+                            <div className="your_rating">
+                                <h3>Your Rating
+                                    <span>
+                                        <Rater
+                                        rating={userRating}
+                                        onRate={this.handleRate} name="userRating" />
+                                    </span>
+                                </h3>
+                                
+                                <textarea
+                                    type="text"
+                                    placeholder="Enter your comment"
+                                    defaultValue={userComment}
+                                    name="userComment"
+                                    onChange={this.handleChange}
+                                />
+                            </div>
+                        
+                        
+                                <h2 style={{ color: "white", margin: 50 }}>{errorMessage} </h2>
+                            </div> 
+
+                            <div className="FormFieldA"> 
+                                <button
+                                    onClick={e =>
+                                        this.addNewComment(resPlace[0].place_id, userComment, userRating)
+                                    }
+                                    className="Form-Button">
+                                    SUBMIT
+                                </button> <br></br>
+                                    <div className="Link">
+                                        <NavLink to="/feedBackPage" ClassName="feedback">
+                                        Give us FeedBack here{" "}
+                                        </NavLink>
+                                    </div>
+                            </div>  
+                        </div>
+                </div>
+                        
+                    <div className="comment_right"> 
                         <h3>Comments</h3>
                         {responseComment.map(item => (
                             <div key={item.comment_id}>
@@ -168,17 +177,8 @@ class Rating extends Component {
                             </div>
                         ))}
 
-                        {/* <button onClick={this.Logout}
-                            className="Form-Button">  LOGOUT
-                            </button>  */}
-
-                    </div>
-                </div>
-
-                <NavLink to="/feedBackPage" ClassName="feedback">
-                    Give us FeedBack here{" "}
-                </NavLink>
-
+                      
+                     </div> 
                 <Route
                     excat
                     path="/feedBackPage"

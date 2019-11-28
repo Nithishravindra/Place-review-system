@@ -40,10 +40,9 @@ Router.post("/add", (req, res) => {
     mysqlConnection.query('INSERT INTO feedback (feedback_comment, yesorno, users_user_id) VALUES (?, ?, ?)',
         [usr.feedback, usr.radio, usr.userID], (error, rows, fields) => {
             if (!error) {
-                console.log('successfully added feedback');
                 res.send('thanks for feedback');
             } else {
-                console.log(error);
+                console.error(error);
                 res.send('Unsuccesful');
             }
         })

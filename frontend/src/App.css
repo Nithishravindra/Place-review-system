@@ -34,6 +34,7 @@
   display: inline-block;
   background-color: #EDE5E3;
   color: rgb(17, 16, 16);
+  
 }
 
 .PageSwitcher__Item:first-child {
@@ -61,12 +62,10 @@
 
 .FormTitle__Link {
   color: #707C8B;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 1.7em;
-  margin: 0 10px;
-  margin-bottom: 20px;
-  padding-bottom: 5px;
+    text-decoration: none;
+    display: inline-block;
+    margin: 0 10px;
+    padding-bottom: 5px;
 }
 
 .FormTitle__Link:first-child {
@@ -75,6 +74,7 @@
   margin: 0px;
   margin-top:-5px;
   margin-bottom:-10px;
+  /* margin-left: -550px; */
 
 }
 
@@ -120,13 +120,14 @@
   padding: 15px 70px;
   font-size: .8em;
   font-weight: 500;
+  margin-top: 20px;
+  margin-left: -50px;
 }
 
 .FormField__Link {
   color: #66707D;
   text-decoration: none;
   display: inline-block;
-  border-bottom: 1.5px solid #225E62;
   padding-bottom: 5px;
 }
 
@@ -139,3 +140,38 @@
   margin-left: 5px;
 }
 
+form {
+  width: 50%;
+  margin-top: -55px;
+}
+
+.FormBtn {
+  background-color: white;
+    color: rgb(12, 11, 11);
+    border-radius: 25px;
+    padding: 15px 70px;
+    font-size: .5em;
+    font-weight: 400;
+    margin-top: 20px;
+    margin-left: -30px;
+}
+
+p3 {
+  font-size: 25px;
+    color: #66707D;
+    text-decoration: none;
+    padding-bottom: 5px;
+    padding: 20px;
+    
+}
+
+.FormButtton {
+  background-color: white;
+    color: rgb(12, 11, 11);
+    border-radius: 25px;
+    padding: 15px 70px;
+    font-size: .5em;
+    font-weight: 400;
+    margin-top: 20px;
+    margin-left: 0px;
+}

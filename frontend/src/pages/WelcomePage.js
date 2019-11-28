@@ -50,7 +50,7 @@ class App extends Component {
 						})
 					}
 				})
-
+				window.location.reload()
 		} else {
 			this.setState({
 				errorMessage: "Please fill fields"
@@ -70,7 +70,6 @@ class App extends Component {
 		})
 			.then(res => res.json())
 			.then(response => {
-				//console.log(response)
 				this.setState({
 					listOfPlaces: response
 				})
@@ -79,17 +78,15 @@ class App extends Component {
 
 	render() {
 		const { placeTitle, description, listOfPlaces, errorMessage } = this.state;
-
 		return (
 			<div className="Ap">
 				<div className="FormFieldB">
 					<h4>Welcome to Place Review System</h4>
-					<h5>Places listed below can be reviewed.</h5>
+					<h5>Places listed below can be reviewed</h5>
 				</div>
 
-
 				<div className="FormFieldB">
-					<div className="FormTitle">
+					<div className="PlaceTitle">
 
 						{listOfPlaces.map((item, index) => (	
 							<Link
@@ -103,16 +100,18 @@ class App extends Component {
 						))}
 					</div>
 
-					<form onSubmit={this.handleSubmit}>
-						<h5>To add a new place in the list, add title and description in below textbox and click on 'SUBMIT' button.</h5>
 
-						<div className="FormFieldT">
-							<input type="text"
-								placeholder="Place Title"
-								value={placeTitle}
-								name="placeTitle"
-								onChange={this.handleChange} />
-						</div>
+					<form onSubmit={this.handleSubmit}>
+				
+					<h5>Add a new place and description to review</h5>
+
+					<div className="FormFieldT">
+						<input type="text"
+							placeholder="Place Title"
+							value={placeTitle}
+							name="placeTitle"
+							onChange={this.handleChange} />
+					</div>
 
 						<div className="FormFText">
 							<textarea type="text"
@@ -125,8 +124,9 @@ class App extends Component {
 						<div className="validation_welcomepage">
 							<h2 style={{ margin: 30 }}> {errorMessage}</h2>
 							<button
-								onClick={e => this.handleSubmit(e, placeTitle, description)} className="FormT_button" >
-								SUBMIT</button>
+								onClick={e => this.handleSubmit(e, placeTitle, description)} 
+								className="FormT_button" >
+								Add</button>
 						</div>
 					</form>
 

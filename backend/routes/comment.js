@@ -15,13 +15,9 @@ Router.get("/", (req, res) => {
 
 // to insert new place
 Router.post("/add", (req, res) => {
-   const placeId = 58;
-    // replace placeID  
     let usr = req.body;
-    console.log(usr.userID)
     mysqlConnection.query('SELECT name from users where user_id = ?', usr.userID, (error, rows, fields) => {
         let userName = rows[0].name;
-        console.log(userName)
         let params = [usr.COMMENT, userName, usr.userID, usr.placeId, usr.userRating, usr.userID, usr.placeId, usr.placeId, usr.placeId]
         if (!error) {
             mysqlConnection.query('INSERT INTO comment (comment, name, USERS_USER_ID, place_id) VALUES (?,?,?,?) ;\

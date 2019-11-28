@@ -30,7 +30,6 @@ Router.delete("/delete/:id", (req, res) => {
 // to insert a place 
 Router.post("/add", (req, res) => {
     let usr = req.body;
-    console.log(usr.placeTitle, usr.description, usr.userID, usr.userID)
     mysqlConnection.query('INSERT INTO places (place_title, place_description, user_id) VALUES (?, ?, ?)',
         [usr.placeTitle, usr.description, usr.userID], (error, rows, fields) => {
             if (!error) {
@@ -89,7 +88,7 @@ Router.get("/:placename", (req, res) => {
                 mysqlConnection.query(commentItem, placeID, (error, rows) => {
                     if (!error) {
                         if (rows.length > 0) {
-                            let commentList = JSON.parse(JSON.stringify(rows));
+                            const commentList = JSON.parse(JSON.stringify(rows));
                             mysqlConnection.query(average, placeID, (error, rows) => {
                                 if (!error) {
                                     let averageItem = JSON.parse(JSON.stringify(rows[0]));
@@ -101,7 +100,10 @@ Router.get("/:placename", (req, res) => {
                                 }
                             })
                         } else {
-                            res.status(200).send({ "average_rating": 0, "comments": "null" })
+                           
+                            let averageItem = { " average_rating" : 0 } , commentList = [];
+                            let newObj = Object.assign( {},{averageItem, commentList, placeItem});
+                            res.status(200).send(newObj)
                         }
                     } else {
                         console.error(error);

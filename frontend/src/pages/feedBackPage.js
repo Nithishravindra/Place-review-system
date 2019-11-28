@@ -77,34 +77,26 @@ class Feedback extends Component {
 		const { feedback, radio1, errorMessage } = this.state;
 
 		return (
-			<div className="Ap">
+			<div className="A">
 				<div className="FormFieldB">
 
 					<h3> was this site helpful?</h3>
 					<form onSubmit={this.handleSubmit}>
-
-						<div className="radio_feedback">
-							<div className="radio_button">
-
+							 <div className="radio_button"> 
 								<input type="radio"
 									name="radio1"
 									value="Yes"
 									checked={this.state.radio1 === "Yes"}
-									onChange={this.handleChange} />
-								<h5>YES</h5>
-							</div>
-
-							<div className="radio_button">
+									onChange={this.handleChange} label="YES"/>
+									<h5>YES</h5>
 								<input type="radio"
 									name="radio1"
 									value="No"
 									checked={this.state.radio1 === "No"}
-									onChange={this.handleChange} />
-								<h5>NO</h5>
-							</div>
-						</div>
-						radio1: {this.state.radio1}
-
+									onChange={this.handleChange} label="No"/>
+									<h5>NO</h5>
+							 </div> 
+						
 						<div className="FormFText">
 							<textarea type="text"
 								placeholder="provide your feedback here"
@@ -113,7 +105,6 @@ class Feedback extends Component {
 								onChange={this.handleChange} />
 						</div>
 
-
 						<div className="validation_feedbackPage">
 							<h2 style={{ margin: 30 }}> {errorMessage}</h2>
 							<button className="FormT_button"
@@ -121,7 +112,10 @@ class Feedback extends Component {
 								SUBMIT</button>
 						</div>
 
-						<button className="FormT_button" onClick={this.Logout}>Logout</button>
+						<div className="buttonLogout">
+							<button className="FormT_button" onClick={this.Logout}>Logout</button>
+						</div>
+
 					</form>
 				</div>
 			</div>
