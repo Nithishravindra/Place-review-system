@@ -89,7 +89,7 @@ class SignInForm extends Component {
 
           <div className="FormField">
 
-            <h2 style={{ margin: 30 }}> {errorMessage}</h2>
+            <h2 style={{ margin: 70 }}> {errorMessage}</h2>
             <button onClick={e => this.handleSubmit(e, email, password)} className="FormField__Button mr-20"> Login</button>
             <Link to="/welcomePage"></Link>
             <p3> < br/>  < br /> Create an account</p3>

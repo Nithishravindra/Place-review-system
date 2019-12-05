@@ -6,10 +6,9 @@ const mysqlConnection = require('../connection');
 Router.get("/", (req, res) => {
     mysqlConnection.query('SELECT * FROM places', (error, rows, fields) => {
         if (!error) {
-            console.log('select p.place_id,p.place_title, p.place_description, r.average_rating, c.comment, c.name  from places p, rating r, comment cwhere p.place_id = 43')
             res.status(200).send(rows);
         } else {
-            console.log(error);
+            console.error(error);
         }
     });
 });
@@ -33,8 +32,8 @@ Router.post("/add", (req, res) => {
     mysqlConnection.query('INSERT INTO places (place_title, place_description, user_id) VALUES (?, ?, ?)',
         [usr.placeTitle, usr.description, usr.userID], (error, rows, fields) => {
             if (!error) {
+                console.log("place added");
                 let addPlaceID = rows.insertId;
-                console.log('placeID = ', addPlaceID)
                 res.status(200).send({ 'statusCode': 200, 'message': usr.userID })
             } else {
                 res.status(401).send({ 'statusCode': 401, 'message': 'Place already exists' });
@@ -49,6 +48,7 @@ Router.put("/update", (req, res) => {
     CALL PlaceEdit(@PLACE_ID, @PLACE_TITLE, @PLACE_DESCRIPTION);';
     mysqlConnection.query(sqll, [usr.PLACE_ID, usr.PLACE_TITLE, usr.PLACE_DESCRIPTION, usr.USERS_USER_ID], (error, rows, fields) => {
         if (!error) {
+            console.log("Updated")
             res.status(200).send(' yay! Updated successfully');
         } else {
             console.error(error)
@@ -62,9 +62,9 @@ Router.get("/listofplaces", (req, res) => {
     let query = 'SELECT place_id, place_title, place_description FROM places';
     mysqlConnection.query(query, (error, rows, fields) => {
         if (error) {
+            console.error(error)
             res.status(400).send("Error")
         } else {
-            //console.log('placeItem', rows);
             res.status(200).send(rows);
         }
     })
@@ -73,7 +73,6 @@ Router.get("/listofplaces", (req, res) => {
 
 Router.get("/:placename", (req, res) => {
     let placeName = req.params.placename;
-    //console.log('placeName == ', placeName);
     let forPlaceID = 'select place_title, place_id, place_description from places where place_title = ?';
     let commentItem = 'select  c.comment_id, c.name, c.comment from comment c where place_id = ?';
     let average = 'select average_rating from rating where place_id = ?'
@@ -82,9 +81,9 @@ Router.get("/:placename", (req, res) => {
             console.error(error);
             res.status(400).send("Error");
         } else {
-            if (rows.length > 0) {  
+            if (rows.length > 0) {
                 let placeID = rows[0].place_id;
-                let placeItem =  JSON.parse(JSON.stringify(rows));
+                let placeItem = JSON.parse(JSON.stringify(rows));
                 mysqlConnection.query(commentItem, placeID, (error, rows) => {
                     if (!error) {
                         if (rows.length > 0) {
@@ -92,17 +91,15 @@ Router.get("/:placename", (req, res) => {
                             mysqlConnection.query(average, placeID, (error, rows) => {
                                 if (!error) {
                                     let averageItem = JSON.parse(JSON.stringify(rows[0]));
-                                    //let newObj = commentList.flat().map(p => Object.assign(p, averageItem, placeItem));
-                                     let newObj = Object.assign( {},{averageItem, commentList, placeItem});
-                                      res.status(200).send(newObj);
+                                    let newObj = Object.assign({}, { averageItem, commentList, placeItem });
+                                    res.status(200).send(newObj);
                                 } else {
                                     res.status(401).send("failed here")
                                 }
                             })
                         } else {
-                           
-                            let averageItem = { " average_rating" : 0 } , commentList = [];
-                            let newObj = Object.assign( {},{averageItem, commentList, placeItem});
+                            let averageItem = { " average_rating": 0 }, commentList = [];
+                            let newObj = Object.assign({}, { averageItem, commentList, placeItem });
                             res.status(200).send(newObj)
                         }
                     } else {

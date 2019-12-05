@@ -2,11 +2,9 @@ const express = require("express");
 const Router = express.Router();
 const mysqlConnection = require('../connection');
 const sgMail = require('@sendgrid/mail');
-sgMail.setApiKey(process.env.SENDGRID_API_KEY);
-
+sgMail.setApiKey('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');
 const cookieParser = require('cookie-parser')
 Router.use(cookieParser());
-
 
 // to get all USERS
 Router.get("/", (req, res) => {
@@ -45,29 +43,27 @@ Router.delete("/delete/:id", (req, res) => {
 
 // to INSERT an user 
 Router.post("/add", (req, res) => {
-
     let usr = req.body;
     let sql = 'INSERT INTO users(name, email, password, phno) VALUES (?,?,?,?)'
     mysqlConnection.query(
         sql, [usr.name, usr.email, usr.password, usr.phno], (error, rows, fields, next) => {
             if (!error) {
                 const msg = {
-                    to: "nithishravindra8@gmail.com",
-                    from: "nithishravindra8@gmau",
+                    to: usr.email,
+                    from: "nithishravindra8@gmail.com",
                     subject: 'PLACE REVIEW SYSTEM',
-                    text: 'Thanks for registering to place-reviewe-system',
+                    text: 'Thanks for registering to place-review-system',
+                    html: 'Thanks for registering to Place-Review-System'
                 }
-                // sgMail.send(msg, (error, result) => {
-                // if (error) {
-                //    console.log(error)
-                // }
-                // else {
-                //      console.log('email sent', result)
-                //     }
-                // });
-
-                //console.log('email sent');
-                res.status(200).send('inserted');
+                sgMail.send(msg, (error, result) => {
+                    if (error) {
+                    console.error(error)
+                    }
+                    else {
+                        console.log('email sent')
+                    }
+                });
+                res.status(200).send('Inserted');
             } else {
                 console.log(error)
                 res.status(401).send('Invalid email or inputs');
@@ -85,6 +81,7 @@ Router.put("/update", (req, res) => {
             if (!error) {
                 res.status(200).send('Updated successfully');
             } else {
+                console.error(error)
                 res.status(401).send('Unsuccessful')
             }
         })

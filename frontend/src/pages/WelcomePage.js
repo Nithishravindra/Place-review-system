@@ -50,7 +50,7 @@ class App extends Component {
 						})
 					}
 				})
-				window.location.reload()
+				//window.location.reload()
 		} else {
 			this.setState({
 				errorMessage: "Please fill fields"

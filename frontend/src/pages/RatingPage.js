@@ -89,8 +89,6 @@ class Rating extends Component {
                     responseComment: response.commentList,
                     isLoading: false
                 })
-                console.log("Api response ", response.averageItem)
-
             })
     }
 

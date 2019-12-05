@@ -50,7 +50,7 @@ class SignUpForm extends Component {
 						.then(data => {
 							console.log(data);
 						})
-					// alert('Registered successfully')
+					 alert('Registered successfully')
 				} else {
 					this.setState({
 						errorMessage: "Password did not match"
