@@ -32,7 +32,6 @@ class SignUpForm extends Component {
 		if (this.state.name.length > 0 && this.state.email.length > 0 && this.state.password.length > 0) {
 			if (this.state.phno.length === 10) {
 				if (this.state.password === this.state.conpassword) {
-					console.log(name, email, password, conpassword, phno);
 					fetch(`http://localhost:3000/users/add`, {
 						method: "POST",
 						body: JSON.stringify({

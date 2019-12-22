@@ -2,7 +2,6 @@ const express = require("express");
 const Router = express.Router();
 const mysqlConnection = require('../connection');
 const sgMail = require('@sendgrid/mail');
-sgMail.setApiKey('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');
 const cookieParser = require('cookie-parser')
 Router.use(cookieParser());
 
@@ -13,7 +12,7 @@ Router.get("/", (req, res) => {
             if (!error) {
                 res.send(rows);
             } else {
-                console.log(error);
+                console.error(error);
             }
         })
 })
@@ -25,7 +24,7 @@ Router.get("/:id", (req, res) => {
             if (!error) {
                 res.send(rows);
             } else {
-                console.log(error);
+                console.error(error);
             }
         })
 })
@@ -36,7 +35,7 @@ Router.delete("/delete/:id", (req, res) => {
         if (!error) {
             res.send('Deleted successfully');
         } else {
-            console.log(error);
+            console.error(error);
         }
     })
 })
@@ -48,24 +47,9 @@ Router.post("/add", (req, res) => {
     mysqlConnection.query(
         sql, [usr.name, usr.email, usr.password, usr.phno], (error, rows, fields, next) => {
             if (!error) {
-                const msg = {
-                    to: usr.email,
-                    from: "nithishravindra8@gmail.com",
-                    subject: 'PLACE REVIEW SYSTEM',
-                    text: 'Thanks for registering to place-review-system',
-                    html: 'Thanks for registering to Place-Review-System'
-                }
-                sgMail.send(msg, (error, result) => {
-                    if (error) {
-                    console.error(error)
-                    }
-                    else {
-                        console.log('email sent')
-                    }
-                });
                 res.status(200).send('Inserted');
             } else {
-                console.log(error)
+                console.error(error)
                 res.status(401).send('Invalid email or inputs');
             }
         })

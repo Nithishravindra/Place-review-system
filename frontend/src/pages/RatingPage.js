@@ -24,7 +24,6 @@ class Rating extends Component {
 
 
     addNewComment = (placeId, userComment, userRating) => {
-        console.log('placeid in addnewcomment == ', placeId, userComment, userRating)
         const cUserID = localStorage.getItem('userID');
         if (this.state.userComment.length > 0) {
             fetch(`http://localhost:3000/comment/add`, {
@@ -57,7 +56,6 @@ class Rating extends Component {
 
     handleRate(e) {
         const TOTAL_RATING = e.rating;
-        console.log('lololol', TOTAL_RATING)
         this.setState({
             userRating: TOTAL_RATING
         })
@@ -67,7 +65,6 @@ class Rating extends Component {
         this.setState({
             [event.target.name]: event.target.value
         });
-        console.log(this.state)
     }
 
     componentDidMount() {
@@ -82,7 +79,6 @@ class Rating extends Component {
         })
             .then(res => res.json())
             .then(response => {
-                console.log(response)
                 this.setState({
                     resPlace: response.placeItem,
                     responseAvg: response.averageItem,

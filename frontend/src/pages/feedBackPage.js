@@ -17,7 +17,6 @@ class Feedback extends Component {
 
 	Logout = (e) => {
 		const cUserID = localStorage.getItem('userID');
-		console.log('in feedbackPage ', cUserID)
 		fetch(`http://localhost:3000/users/logout`, {
 			method: "POST",
 			body: JSON.stringify({

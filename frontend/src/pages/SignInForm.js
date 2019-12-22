@@ -53,17 +53,14 @@ class SignInForm extends Component {
         errorMessage: "Please enter email/password"
       })
     }
-
   }
 
   componentDidMount() {
     document.title = 'PRS log in or sign up';
   }
 
-
   render() {
     const { email, password, errorMessage } = this.state;
-
 
     return (
       <div className="FormCenter">
