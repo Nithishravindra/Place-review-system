@@ -68,7 +68,6 @@ class Rating extends Component {
     }
 
     componentDidMount() {
-
         let title = this.props.match.params.placeName
         fetch(`http://localhost:3000/places/${title}`, {
             method: "GET",
