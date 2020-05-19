@@ -42,6 +42,7 @@
   border-top-left-radius: 25px;
   border-bottom-left-radius: 25px;
 }
+
 .PageSwitcher__Item:last-child {
   display: inline-block;
   border-top-right-radius: 25px;
@@ -74,8 +75,6 @@
   margin: 0px;
   margin-top:-5px;
   margin-bottom:-10px;
-  /* margin-left: -550px; */
-
 }
 
 .FormTitle__Link--Active {
@@ -154,15 +153,6 @@ form {
     font-weight: 400;
     margin-top: 20px;
     margin-left: -30px;
-}
-
-p3{
-  font-size: 25px;
-    color: #66707D;
-    text-decoration: none;
-    padding-bottom: 5px;
-    padding: 20px;
-    
 }
 
 h6{

@@ -20,10 +20,10 @@ class SignInForm extends Component {
     });
   }
 
-  handleSubmit(e, email, password) {
+  handleSubmit(e) {
     e.preventDefault();
 
-    if (email.length > 0 && password.length > 0) {
+    if (this.state.email.length > 0 && this.state.password.length > 0) {
       fetch(`http://localhost:3000/users/login`, {
         method: "POST",
         body: JSON.stringify({
@@ -60,11 +60,11 @@ class SignInForm extends Component {
   }
 
   render() {
-    const { email, password, errorMessage } = this.state;
+    const { errorMessage } = this.state;
 
     return (
       <div className="FormCenter">
-        {this.componentDidMount()}
+        
         <div className="App-header"><h1>Place Review System</h1></div>
 
         <div className="PageSwitcher">
@@ -87,14 +87,11 @@ class SignInForm extends Component {
           <div className="FormField">
 
             <h2 style={{ margin: 70 }}> {errorMessage}</h2>
-            <button onClick={e => this.handleSubmit(e, email, password)} className="FormField__Button mr-20"> Login</button>
-            <Link to="/welcomePage"></Link>
-            <p3> < br/>  < br /> Create an account</p3>
-            
-            <Link to="/sign-up" className="FormTitle__Link"> 
-              <button  className="FormButtton"> Register</button>
-            </Link> 
-             
+            <button 
+            className="FormField__Button mr-20"> 
+            Login
+            </button>
+            <Link to="/welcomePage"></Link>             
           </div>
 
           <Route exact path="/welcomePage" component={WelcomePage} />

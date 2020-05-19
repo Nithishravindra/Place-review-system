@@ -49,9 +49,10 @@ class Feedback extends Component {
 		});
 	}
 
-	handleSubmit = (e, feedback, radio1) => {
+	handleSubmit = (e) => {
 		e.preventDefault();
-		if (feedback && feedback.length > 0) {
+
+		if (this.state.feedback && this.state.feedback.length > 0) {
 			const cUserID = localStorage.getItem('userID');
 			fetch(`http://localhost:3000/feedback/add`, {
 				method: "POST",
@@ -73,13 +74,12 @@ class Feedback extends Component {
 	}
 
 	render() {
-		const { feedback, radio1, errorMessage } = this.state;
+		const { feedback, errorMessage } = this.state;
 		return (
 			<div className="A">
 				<div className="FormFieldB">
 
-					<h3> was this site helpful?</h3>
-
+					<h3>Was this site helpful?</h3>
 					<form onSubmit={this.handleSubmit}>
 						<div className="radio_button">
 							<div className="buttonLogout">
@@ -119,9 +119,7 @@ class Feedback extends Component {
 
 						<div className="validation_feedbackPage">
 								<h2 style={{ margin: 30 }}> {errorMessage}</h2>
-								<button className="FormT_button"
-									onClick={e => this.handleSubmit(e, feedback, radio1)}>
-									SUBMIT</button>
+								<button className="FormT_button">SUBMIT</button>
 						</div>
 					</form>
 				</div>

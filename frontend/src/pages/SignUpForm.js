@@ -27,7 +27,7 @@ class SignUpForm extends Component {
 		document.title = 'PRS log in or sign up';
 	}
 
-	newUser(e, name, email, password, conpassword, phno) {
+	newUser(e) {
 		e.preventDefault();
 		if (this.state.name.length > 0 && this.state.email.length > 0 && this.state.password.length > 0) {
 			if (this.state.phno.length === 10) {
@@ -154,7 +154,6 @@ class SignUpForm extends Component {
 								{errorMessage}
 							</h2>
 							<button
-								onClick={e => this.newUser(e, name, email, password, conpassword, phno)}
 								className="FormBtn"> Register
 							</button>
 							

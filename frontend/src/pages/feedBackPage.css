@@ -1,51 +1,53 @@
 .radio_button {
-     margin-left: 50px ;
-     font-size: 25px;
-     color: white;
+  margin-left: 50px;
+  font-size: 25px;
+  color: white;
 }
+
 .radio_button1 {
-     margin-left: 50px ;
-     margin-bottom: 50px;
+  margin-left: 50px;
+  margin-bottom: 50px;
 }
+
 input {
-     border: 1px solid white;
- }
+  border: 1px solid white;
+}
 
- h2 {
-      color: white;
- }
+h2 {
+  color: white;
+}
 
- .radio_feedback {
-     display: flex;
-     flex-direction: row;
-     align-items: flex-start;
- }
+.radio_feedback {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+}
 
- .buttonLogout {
-    display: flex;
-    align-content: flex-end;
- }
- 
- .A {
-      margin-top: 350px;
- }
+.buttonLogout {
+  display: flex;
+  align-content: flex-end;
+}
 
- ul {
-     list-style: none;
-     margin: 0 0 0;
-     padding: 0;
-    }
-    
+.A {
+  margin-top: 350px;
+}
+
+ul {
+  list-style: none;
+  margin: 0 0 0;
+  padding: 0;
+}
+
 input[type="radio"] {
-     margin: 0 10px 0 0;
-}  
- 
+  margin: 0 10px 0 0;
+}
+
 .feedbackBtn {
   background-color: white;
   color: rgb(12, 11, 11);
   border-radius: 25px;
   padding: 15px 70px;
-  font-size: .8em;
+  font-size: 0.8em;
   font-weight: 500;
   margin-left: 900px;
   display: flex;

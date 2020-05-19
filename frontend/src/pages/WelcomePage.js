@@ -123,10 +123,7 @@ class App extends Component {
 
 						<div className="validation_welcomepage">
 							<h2 style={{ margin: 30 }}> {errorMessage}</h2>
-							<button
-								onClick={e => this.handleSubmit(e, placeTitle, description)} 
-								className="FormT_button" >
-								Add</button>
+							<button className="FormT_button" >Add</button>
 						</div>
 					</form>
 
